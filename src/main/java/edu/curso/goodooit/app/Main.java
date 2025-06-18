@@ -12,9 +12,7 @@ public class Main{
                                                     "Nick159642@","localhost", 1433);
         try {
             Connection conn = sql.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
