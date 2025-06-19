@@ -27,7 +27,7 @@ public class QuadroDAO implements IQuadroDAO {
         this.dbConn = dbConn;
     }
 
-    public Quadro construirQuadro(ResultSet rs) throws SQLException {
+    private Quadro construirQuadro(ResultSet rs) throws SQLException {
         return new Quadro(
                 rs.getInt("ID"),
                 rs.getString("titulo"),
@@ -52,11 +52,12 @@ public class QuadroDAO implements IQuadroDAO {
 
     @Override
     public void criarQuadros(String titulo, Integer idProjeto) throws SQLException {
-        String sql = "INSERT INTO quadro (titulo, projetoID) VALUES (?, ?)";
+        String sql = "INSERT INTO quadro (ID,titulo, projetoID) VALUES (?, ?, ?)";
         try (Connection conn = dbConn.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);) {
-            stmt.setString(1, titulo);
-            stmt.setInt(2, idProjeto);
+            stmt.setInt(1, 2025555);
+            stmt.setString(2, titulo);
+            stmt.setInt(3, idProjeto);
             int linhas = stmt.executeUpdate();
             System.out.println("Linhas afetadas: " + linhas);
         }
@@ -75,29 +76,5 @@ public class QuadroDAO implements IQuadroDAO {
             }
         }
         return quadro;
-    }
-
-    @Override
-    public List<Lista> buscarListarQuadroID(Integer id) throws SQLException {
-        String sql = """
-                SELECT l.*
-                FROM lista l
-                INNER JOIN lista_quadro lq ON l.id = lq.id
-                WHERE lq.QuadroID = ?; 
-                """;
-        List<Lista> listas = new ArrayList<>();
-        try (Connection conn = dbConn.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);) {
-            stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                Lista lista = new Lista(
-                        rs.getInt("ID"),
-                        rs.getString("titulo")
-                );
-                listas.add(lista);
-            }
-        }
-        return listas;
     }
 }

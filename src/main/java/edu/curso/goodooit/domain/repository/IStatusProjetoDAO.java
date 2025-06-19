@@ -8,7 +8,7 @@ import java.util.List;
 public interface IStatusProjetoDAO {
     public List<StatusProjeto> buscarTodosStatusProjeto() throws SQLException;
 
-    public StatusProjeto buscarStatusProjetoId(Long id) throws SQLException;
+    public StatusProjeto buscarStatusProjetoId(Integer id) throws SQLException;
 
     public StatusProjeto registrarStatusProjeto(StatusProjeto statusProjeto) throws SQLException;
 

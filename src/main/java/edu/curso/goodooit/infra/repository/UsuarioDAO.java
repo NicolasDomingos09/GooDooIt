@@ -41,7 +41,7 @@ public class UsuarioDAO implements IUsuarioDAO {
     }
 
     @Override
-    public Usuario buscarUsuarioID(Long id) {
+    public Usuario buscarUsuarioID(Integer id) throws SQLException {
         return null;
     }
 

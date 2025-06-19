@@ -14,7 +14,7 @@ public interface IUsuarioDAO {
 
     public void excluirUsuario(Usuario usuario) throws SQLException;
 
-    public Usuario buscarUsuarioID(Long id) throws SQLException;
+    public Usuario buscarUsuarioID(Integer id) throws SQLException;
 
     public Usuario buscarUsuarioLogin(String login) throws SQLException;
 
