@@ -19,4 +19,6 @@ public interface IListaDAO {
     public void atualizarLista(Lista lista) throws SQLException;
 
     public List<Lista> buscarListasQuadroId(Integer idQuadro) throws SQLException;
+
+    public void registrarListaEmQuadro(Integer idLista, Integer idQuadro) throws SQLException;
 }

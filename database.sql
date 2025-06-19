@@ -164,6 +164,7 @@ INSERT INTO Usuario (nome, login, senha, email) VALUES
 ('Igor Nunes', 'igor', 'pass456', 'igor@exemplo.com'),
 ('Juliana Faria', 'juliana', 'jul123', 'juliana@exemplo.com');
 
+
 INSERT INTO Status_Projeto (ID, nome, descricao) VALUES
 (1, 'Em Andamento', 'Projeto está em progresso'),
 (2, 'Concluído', 'Projeto finalizado com sucesso'),
@@ -303,30 +304,39 @@ INSERT INTO Comentario (TarefaID, UsuarioID, texto) VALUES
 (10008, 10000, 'Login funcional'),
 (10009, 10001, 'Tela de perfil em construção');
 
+
+/*
+ * Autenticacao no banco
+SELECT 
+	CASE WHEN (senha = 123456)
+		THEN login 
+		ELSE 'Senha Incorreta'
+	END AS usuario
+FROM Usuario
+ */
+
 SELECT * FROM Projeto;
 
-
-PRINT CHAR(13) + CHAR(10) + "Tabela Usuario";
 SELECT * FROM Usuario;
-PRINT CHAR(13) + CHAR(10) + "Tabela Status_Projeto";
+
 SELECT * FROM Status_Projeto;
-PRINT CHAR(13) + CHAR(10) + "Tabela Notificacao";
+
 SELECT * FROM Notificacao;
-PRINT CHAR(13) + CHAR(10) + "Tabela Equipe";
+
 SELECT * FROM Equipe;
-PRINT CHAR(13) + CHAR(10) + "Tabela Usuario_Notificacao";
+
 SELECT * FROM Usuario_Notificacao;
-PRINT CHAR(13) + CHAR(10) + "Tabela Quadro";
+
 SELECT * FROM Quadro;
-PRINT CHAR(13) + CHAR(10) + "Tabela Lista";
+
 SELECT * FROM Lista;
-PRINT CHAR(13) + CHAR(10) + "Tabela Lista_Quadro";
+
 SELECT * FROM Lista_Quadro;
-PRINT CHAR(13) + CHAR(10) + "Tabela Status_Tarefa";
+
 SELECT * FROM Status_Tarefa;
-PRINT CHAR(13) + CHAR(10) + "Tabela Tarefa";
+
 SELECT * FROM Tarefa;
-PRINT CHAR(13) + CHAR(10) + "Tabela Convite";
+
 SELECT * FROM Convite;
-PRINT CHAR(13) + CHAR(10) + "Tabela Comentario";
+
 SELECT * FROM Comentario;

@@ -44,7 +44,7 @@ public class ListaDAO implements IListaDAO {
         String sql = "SELECT * FROM lista WHERE ID = ?";
         Lista lista = new Lista();
         try (Connection conn = dbConn.getConnection();
-        PreparedStatement stmt = conn.prepareStatement(sql);){
+             PreparedStatement stmt = conn.prepareStatement(sql);) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -59,7 +59,7 @@ public class ListaDAO implements IListaDAO {
         String sql = "SELECT * FROM lista WHERE titulo LIKE ?";
         Lista lista = new Lista();
         try (Connection conn = dbConn.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);){
+             PreparedStatement stmt = conn.prepareStatement(sql);) {
 
             stmt.setString(1, "%" + nome + "%");
             ResultSet rs = stmt.executeQuery();
@@ -73,9 +73,8 @@ public class ListaDAO implements IListaDAO {
     @Override
     public void registrarLista(Lista lista) throws SQLException {
         String sql = "INSERT INTO lista (titulo) VALUES (?)";
-        System.out.println(sql);
         try (Connection conn = dbConn.getConnection();
-        PreparedStatement stmt = conn.prepareStatement(sql);){
+             PreparedStatement stmt = conn.prepareStatement(sql);) {
             stmt.setString(1, lista.getTitulo());
             int linhas = stmt.executeUpdate();
             System.out.println("Linhas afetadas: " + linhas);
@@ -86,7 +85,7 @@ public class ListaDAO implements IListaDAO {
     public void excluirLista(Lista lista) throws SQLException {
         String sql = "DELETE FROM lista WHERE ID = ?";
         try (Connection conn = dbConn.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);){
+             PreparedStatement stmt = conn.prepareStatement(sql);) {
             stmt.setInt(1, lista.getID());
             int linhas = stmt.executeUpdate();
             System.out.println("Linhas afetadas: " + linhas);
@@ -97,7 +96,7 @@ public class ListaDAO implements IListaDAO {
     public void atualizarLista(Lista lista) throws SQLException {
         String sql = "UPDATE lista SET titulo = ? WHERE ID = ?";
         try (Connection conn = dbConn.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);){
+             PreparedStatement stmt = conn.prepareStatement(sql);) {
             stmt.setString(1, lista.getTitulo());
             int linhas = stmt.executeUpdate();
             System.out.println("Linhas afetadas: " + linhas);
@@ -126,5 +125,18 @@ public class ListaDAO implements IListaDAO {
             }
         }
         return listas;
+    }
+
+    @Override
+    public void registrarListaEmQuadro(Integer idLista, Integer idQuadro) throws SQLException {
+        String sql = "INSERT INTO lista_quadro VALUES (?,?)";
+        System.out.println(sql);
+        try (Connection conn = dbConn.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);) {
+            stmt.setInt(1, idLista);
+            stmt.setInt(2, idQuadro);
+            int linhas = stmt.executeUpdate();
+            System.out.println("Linhas afetadas: " + linhas);
+        }
     }
 }
