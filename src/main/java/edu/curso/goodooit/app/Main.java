@@ -26,16 +26,17 @@ public class Main{
         try {
             List< Notificacao > notificacaos = notificacaoDAO.buscarTodosNotificacoes();
             notificacaos.forEach(n -> System.out.println(n.toString()));
+//            System.out.println(notificacaoDAO.buscarNotificacaoId(500007).toString());
 
-            System.out.println(notificacaoDAO.buscarNotificacaoId(500007).toString());
+            Notificacao n = notificacaoDAO.buscarNotificacaoId(500010);
+//            n = notificacaoDAO.registrarNotificacao(n);
+//            n.setTitulo("vamo ve");
 
-            Notificacao n = new Notificacao("Teste AAAA", "não aguento mais", LocalDate.now());
-            n = notificacaoDAO.registrarNotificacao(n);
-            n.setTitulo("vamo ve");
+//            notificacaoDAO.excluirNotificacao(n);
 
-            notificacaoDAO.atualizarNotificacao(n);
-            System.out.println(notificacaoDAO.buscarNotificacaoId(n.getID()).toString());
-            
+//            notificacaoDAO.atualizarNotificacao(n);
+//            System.out.println(notificacaoDAO.buscarNotificacaoId(n.getID()).toString());
+//
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -8,9 +8,9 @@ import java.util.List;
 public interface IUsuarioNotificacaoDAO {
     public List<UsuarioNotificacao> buscarTodosUsuarioNotificacao() throws SQLException;
 
-    public UsuarioNotificacao buscarUsuarioNotificacaoIdUsuario(Integer id) throws SQLException;
+    public UsuarioNotificacao buscarUsuarioNotificacaoIdUsuario(Integer idUsuario) throws SQLException;
 
-    public UsuarioNotificacao buscarUsuarioNotificacaoIdNotificacao(Integer id) throws SQLException;
+    public UsuarioNotificacao buscarUsuarioNotificacaoIdNotificacao(Integer idNotificacao) throws SQLException;
 
     public void registrarUsuarioNotificacao(UsuarioNotificacao usuarioNotificacao) throws SQLException;
 
