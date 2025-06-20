@@ -19,5 +19,8 @@ public interface IUsuarioDAO {
 
     public Usuario buscarUsuarioLogin(String login) throws SQLException;
 
-    public Usuario buscarUsuarioNome(String nome) throws SQLException;
+    public Usuario buscarUsuarioNomeCompleto(String nomeCompleto) throws SQLException;
+
+    public Integer validarSenha(String login, String senha) throws SQLException;
+
 }

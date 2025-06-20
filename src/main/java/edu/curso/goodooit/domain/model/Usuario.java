@@ -20,7 +20,14 @@ public class Usuario {
     //Responsabilidade DAO de notificacao
     List<Notificacao> notificacoesRecebidas;
 
-    public Usuario() {
+    public Usuario() {}
+
+    public Usuario(String nome, String sobrenome, String login, String senha, String email) {
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.login = login;
+        this.senha = senha;
+        this.email = email;
     }
 
     public Usuario(Integer ID, String nome, String sobrenome, String login, String senha, String email, List<Projeto> projetosColaborador, List<Projeto> projetosLider, List<Comentario> comentariosEscritos, List<Notificacao> notificacoesRecebidas) {
@@ -123,5 +130,17 @@ public class Usuario {
 
     public void setNotificacoesRecebidas(List<Notificacao> notificacoesRecebidas) {
         this.notificacoesRecebidas = notificacoesRecebidas;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "ID=" + ID +
+                ", nome='" + nome + '\'' +
+                ", sobrenome='" + sobrenome + '\'' +
+                ", login='" + login + '\'' +
+                ", senha='" + senha + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

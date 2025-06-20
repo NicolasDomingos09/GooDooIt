@@ -6,6 +6,10 @@ public class Lista {
 
     public Lista() {}
 
+    public Lista(String titulo) {
+        this.titulo = titulo;
+    }
+
     public Lista(Integer ID, String titulo) {
         this.ID = ID;
         this.titulo = titulo;
@@ -25,5 +29,13 @@ public class Lista {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+
+    @Override
+    public String toString() {
+        return "Lista{" +
+                "ID=" + ID +
+                ", titulo='" + titulo + '\'' +
+                '}';
     }
 }

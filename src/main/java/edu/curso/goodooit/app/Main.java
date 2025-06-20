@@ -1,13 +1,12 @@
 package edu.curso.goodooit.app;
 
-import edu.curso.goodooit.domain.model.Lista;
-import edu.curso.goodooit.domain.model.Quadro;
+import edu.curso.goodooit.domain.model.Usuario;
 import edu.curso.goodooit.infra.database.DataBaseConnection;
-import edu.curso.goodooit.infra.repository.ListaDAO;
-import edu.curso.goodooit.infra.repository.QuadroDAO;
+import edu.curso.goodooit.infra.repository.UsuarioDAO;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main{
@@ -16,42 +15,32 @@ public class Main{
         DataBaseConnection sql  = new DataBaseConnection("GooDooIt","sa",
                                                     "Nick159642@","localhost", 1433);
 
-        //Teste DAO Quadro
-        //Teste DAO Lista
-
-        QuadroDAO quadroDAO = new QuadroDAO(sql);
-        ListaDAO listaDAO = new ListaDAO(sql);
-
+        //Teste DAO Usuario
+        UsuarioDAO usuarioDAO = new UsuarioDAO(sql);
 
         try {
-            //Teste funcionaram
-//            List<Quadro> listaQuadroTeste = quadroDAO.buscarTodosQuadros();
-//            listaQuadroTeste.forEach(q -> System.out.println(q.getId()));
-//
-//            Quadro qd = new  Quadro(2025555, "Quadro teste DAO", 2025100);
-//            quadroDAO.criarQuadros("Quadro teste DAO", 2025100);
-//
-//            System.out.println("\n");
-//            qd = quadroDAO.buscarQuadroID(qd.getId());
-//            System.out.println(qd.getId() + " ID quadro");
-//            System.out.println("\n");
+            List<Usuario> users = new ArrayList<>();
+            users = usuarioDAO.buscarTodosUsuarios();
+            users.forEach(u1 -> System.out.println(u1.toString()));
 
-//            List<Lista> listaListaTeste = listaDAO.buscarTodasListas();
-//            listaListaTeste.forEach(l -> System.out.println(l.getTitulo()));
+            Usuario u = usuarioDAO.buscarUsuarioID(users.getFirst().getID());
+            System.out.println(u.toString());
 
-            Lista lis = new Lista(8888888,"Teste DAO que vai funcionar");
-////            listaDAO.registrarLista(lis);
-//
-////            lis = listaDAO.buscarListaNome("Teste DAO que vai funcionar");
-////
-////            lis = listaDAO.buscarListaId(8888888);
-////            System.out.println(lis.getTitulo());
-////
-//            lis.setTitulo("Teste de atualização que tá rodando");
-//            listaDAO.atualizarLista(lis);
-//
-            listaDAO.excluirLista(lis);
-//            listaDAO.excluirLista(lis1);
+            u = usuarioDAO.buscarUsuarioLogin("ana");
+            System.out.println(u.toString());
+
+            u = usuarioDAO.buscarUsuarioNomeCompleto("Bruno Lima");
+            System.out.println(u.toString());
+
+            Integer id = usuarioDAO.validarSenha("ana", "123456");
+            System.out.println(id);
+
+            u = new Usuario("Nicolas", "Domingos", "nick", "senhateste", "emailteste");
+            usuarioDAO.registrarUsuario(u);
+            u.setID(usuarioDAO.buscarUsuarioLogin("nick").getID());
+
+            u.setEmail("euamoaminhajujubinha@gmail.com");
+            usuarioDAO.atualizarUsuario(u);
 
         } catch (Exception e) {
             e.printStackTrace();
