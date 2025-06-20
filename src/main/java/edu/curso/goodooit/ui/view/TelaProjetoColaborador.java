@@ -1,4 +1,4 @@
-package edu.curso.goodooit.app.ui.view;
+package edu.curso.goodooit.ui.view;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
@@ -16,7 +16,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class TelaProjetoDono extends Application {
+public class TelaProjetoColaborador extends Application {
 
     private boolean menuVisivel = false;
     private Button botaoMenu;
@@ -110,24 +110,13 @@ public class TelaProjetoDono extends Application {
         Button moverTarefa = new Button("Mover tarefa entre quadros");
         estiloBotaoCinza(moverTarefa);
 
-        GridPane config = new GridPane();
-        config.setHgap(20);
-        config.setVgap(15);
-        config.setAlignment(Pos.CENTER);
-        config.setStyle("-fx-background-color: white; -fx-background-radius: 12px; -fx-padding: 20;");
-
-        config.add(new Label("\u270e Gerenciar membros"), 0, 0);
-        config.add(new Label("\u270e Gerenciar Listas"), 1, 0);
-        config.add(new Label("\u270e Gerenciar status"), 2, 0);
-        config.add(new Label("\u270e Gerenciar tarefas"), 3, 0);
-
         Label criado = new Label("Criado em 11/03/2025");
         criado.setStyle("-fx-font-family: monospace; -fx-font-size: 11px;");
         criado.setAlignment(Pos.CENTER_RIGHT);
         HBox rodape = new HBox(criado);
         rodape.setAlignment(Pos.CENTER_RIGHT);
 
-        conteudoPrincipal.getChildren().addAll(header, descricao, datas, infos, criarBotoes, quadros, moverTarefa, config, rodape);
+        conteudoPrincipal.getChildren().addAll(header, descricao, datas, infos, criarBotoes, quadros, moverTarefa, rodape);
 
         mainLayout.getChildren().addAll(scrollPane, fundoEscurecido, menuLateral);
 
@@ -167,7 +156,7 @@ public class TelaProjetoDono extends Application {
         menu.setStyle("-fx-background-color: white; -fx-border-color: lightgray; -fx-min-width: 250px; -fx-max-width: 250px;");
         menu.setAlignment(Pos.TOP_CENTER);
 
-        ImageView avatar = new ImageView(new Image("ghost.png"));
+        ImageView avatar = new ImageView(new Image("/images/Goo.png"));
         avatar.setFitHeight(80);
         avatar.setFitWidth(80);
 

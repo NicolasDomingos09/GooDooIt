@@ -1,4 +1,4 @@
-package edu.curso.goodooit.app.ui.view;
+package edu.curso.goodooit.ui.view;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;

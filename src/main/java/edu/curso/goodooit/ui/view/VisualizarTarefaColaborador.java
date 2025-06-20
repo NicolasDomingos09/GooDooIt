@@ -1,4 +1,4 @@
-package edu.curso.goodooit.app.ui.view;
+package edu.curso.goodooit.ui.view;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
@@ -16,7 +16,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class VisualizarTarefaDono extends Application {
+public class VisualizarTarefaColaborador extends Application {
 
     private boolean menuVisivel = false;
     private Button botaoMenu;
@@ -86,6 +86,7 @@ public class VisualizarTarefaDono extends Application {
         ComboBox<String> statusCombo = new ComboBox<>();
         statusCombo.getItems().addAll("Aguardando P.O.", "Em andamento", "Concluído");
         statusCombo.setValue("Aguardando P.O.");
+        statusCombo.setDisable(menuVisivel);
 
         header.getChildren().addAll(botaoMenu, title, spacer, statusCombo);
 
@@ -149,12 +150,9 @@ public class VisualizarTarefaDono extends Application {
 
         Label corpo = new Label(texto);
         corpo.setStyle("-fx-font-size: 12px; -fx-text-fill: black;");
-
-        Button excluir = new Button("🗑 Excluir");
-        excluir.setStyle("-fx-font-size: 11px;");
-
+        
         if(true) {
-        	box.getChildren().addAll(header, corpo, excluir);
+        	box.getChildren().addAll(header, corpo);
         }
         
         return box;
@@ -167,7 +165,7 @@ public class VisualizarTarefaDono extends Application {
         menu.setStyle("-fx-background-color: white; -fx-border-color: lightgray; -fx-min-width: 250px; -fx-max-width: 250px;");
         menu.setAlignment(Pos.TOP_CENTER);
 
-        ImageView avatar = new ImageView(new Image("ghost.png")); // Adapte ou remova se necessário
+        ImageView avatar = new ImageView(new Image("/images/Goo.png"));
         avatar.setFitHeight(80);
         avatar.setFitWidth(80);
 
