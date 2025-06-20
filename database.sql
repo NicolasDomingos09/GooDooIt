@@ -307,7 +307,10 @@ VALUES (10000, 10000, 'Início da modelagem'),
        (10008, 10000, 'Login funcional'),
        (10009, 10001, 'Tela de perfil em construção');
 
+DELETE FROM Projeto WHERE nome like 'Projeto teste'
+
 SELECT * FROM Usuario;
+SELECT * FROM Projeto WHERE nome like 'To testando de novo';
 SELECT * FROM Projeto;
 SELECT * FROM Comentario;
 SELECT * FROM Notificacao;

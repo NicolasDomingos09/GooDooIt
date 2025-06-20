@@ -10,6 +10,9 @@ public class Usuario {
     String senha;
     String email;
 
+    //lista de listas é responsabilidade da dao de lista
+    List<Equipe> equipes;
+
     //As listas sao responsabilidade da dao de projeto
     List<Projeto> projetosColaborador;
     List<Projeto> projetosLider;
@@ -130,6 +133,14 @@ public class Usuario {
 
     public void setNotificacoesRecebidas(List<Notificacao> notificacoesRecebidas) {
         this.notificacoesRecebidas = notificacoesRecebidas;
+    }
+
+    public List<Equipe> getEquipes() {
+        return equipes;
+    }
+
+    public void setEquipes(List<Equipe> equipes) {
+        this.equipes = equipes;
     }
 
     @Override

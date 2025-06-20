@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListaDAO implements IListaDAO {
-    private DataBaseConnection dbConn;
+    private final DataBaseConnection dbConn;
 
     public ListaDAO(DataBaseConnection dbConn) {
         this.dbConn = dbConn;
@@ -136,6 +136,42 @@ public class ListaDAO implements IListaDAO {
             stmt.setInt(1, idLista);
             stmt.setInt(2, idQuadro);
             int linhas = stmt.executeUpdate();
+            System.out.println("Linhas afetadas: " + linhas);
+        }
+    }
+
+
+    //ToDo: Testar esses métodos quando o novo db estiver pronto
+    @Override
+    public List<Lista> buscarListasColaboradorIdUsuario(Integer idUsuario) throws SQLException {
+        String sql = """
+        SELECT l.*
+          FROM Lista l
+          JOIN Usuario_Lista ul
+            ON l.ID = ul.lista_id
+         WHERE ul.usuario_id = ?
+    """;
+        List<Lista> listas = new ArrayList<>();
+        try (Connection conn = dbConn.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idUsuario);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    listas.add(construirLista(rs));
+                }
+            }
+        }
+        return listas;
+    }
+
+    @Override
+    public void registrarUsuarioLista(Integer idLista, Integer idUsuario) throws SQLException {
+        String sql = "INSERT INTO Usuario_Lista (ListaID, UsuarioID) VALUES (?, ?)";
+        try (Connection conn = dbConn.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idLista);
+            ps.setInt(2, idUsuario);
+            int linhas = ps.executeUpdate();
             System.out.println("Linhas afetadas: " + linhas);
         }
     }

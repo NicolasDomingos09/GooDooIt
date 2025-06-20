@@ -12,7 +12,7 @@ public interface IComentarioDAO {
 
     public Comentario buscarComentarioIdTarefa(Integer idTarefa) throws SQLException;
 
-    public Comentario registrarComentario(Comentario comentario) throws SQLException;
+    public void registrarComentario(Comentario comentario) throws SQLException;
 
     public void excluirComentario(Comentario comentario) throws SQLException;
 

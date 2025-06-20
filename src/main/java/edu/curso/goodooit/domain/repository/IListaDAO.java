@@ -21,4 +21,8 @@ public interface IListaDAO {
     public List<Lista> buscarListasQuadroId(Integer idQuadro) throws SQLException;
 
     public void registrarListaEmQuadro(Integer idLista, Integer idQuadro) throws SQLException;
+
+    public List<Lista> buscarListasColaboradorIdUsuario(Integer idUsuario) throws SQLException;
+
+    public void registrarUsuarioLista(Integer idLista, Integer idUsuario) throws SQLException;
 }

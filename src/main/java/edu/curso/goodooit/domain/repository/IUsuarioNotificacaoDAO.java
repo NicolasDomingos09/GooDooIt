@@ -12,7 +12,7 @@ public interface IUsuarioNotificacaoDAO {
 
     public UsuarioNotificacao buscarUsuarioNotificacaoIdNotificacao(Integer id) throws SQLException;
 
-    public UsuarioNotificacao registrarUsuarioNotificacao(UsuarioNotificacao usuarioNotificacao) throws SQLException;
+    public void registrarUsuarioNotificacao(UsuarioNotificacao usuarioNotificacao) throws SQLException;
 
     public void excluirUsuarioNotificacao(UsuarioNotificacao usuarioNotificacao) throws SQLException;
 

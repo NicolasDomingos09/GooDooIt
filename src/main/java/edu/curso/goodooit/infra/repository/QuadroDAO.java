@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuadroDAO implements IQuadroDAO {
-    private DataBaseConnection dbConn;
+    private final DataBaseConnection dbConn;
 
     public QuadroDAO(DataBaseConnection dbConn) {
         this.dbConn = dbConn;
@@ -21,10 +21,6 @@ public class QuadroDAO implements IQuadroDAO {
 
     public DataBaseConnection getDbConn() {
         return dbConn;
-    }
-
-    public void setDbConn(DataBaseConnection dbConn) {
-        this.dbConn = dbConn;
     }
 
     private Quadro construirQuadro(ResultSet rs) throws SQLException {
