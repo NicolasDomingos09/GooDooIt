@@ -12,6 +12,4 @@ public interface IQuadroDAO {
     public void criarQuadros(String titulo, Integer idProjeto) throws SQLException;
 
     public Quadro buscarQuadroID(Integer id) throws SQLException;
-
-    public List<Lista> buscarListarQuadroID(Integer id) throws SQLException;
 }

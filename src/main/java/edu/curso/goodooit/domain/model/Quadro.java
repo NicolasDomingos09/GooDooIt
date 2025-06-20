@@ -11,6 +11,11 @@ public class Quadro {
 
     public Quadro(){}
 
+    public Quadro(String titulo, Integer projetoId) {
+        this.titulo = titulo;
+        this.projetoId = projetoId;
+    }
+
     public Quadro(Integer id, String titulo, Integer projetoId) {
         this.id = id;
         this.titulo = titulo;
@@ -47,5 +52,15 @@ public class Quadro {
 
     public void setListas(List<Lista> listas) {
         this.listas = listas;
+    }
+
+    @Override
+    public String toString() {
+        return "Quadro{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", projetoId=" + projetoId +
+                ", listas=" + listas +
+                '}';
     }
 }

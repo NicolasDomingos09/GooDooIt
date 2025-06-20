@@ -8,11 +8,11 @@ import java.util.List;
 public interface IConviteDAO {
     public List<Convite> buscarTodosConvites() throws SQLException;
 
-    public Convite ConviteIdRemetente(Long idRemetente) throws SQLException;
+    public Convite ConviteIdRemetente(Integer idRemetente) throws SQLException;
 
-    public Convite buscarConviteIdDestinatario(Long idDestinatario) throws SQLException;
+    public Convite buscarConviteIdDestinatario(Integer idDestinatario) throws SQLException;
 
-    public Convite buscarConviteIdProjeto(Long idProjeto) throws SQLException;
+    public Convite buscarConviteIdProjeto(Integer idProjeto) throws SQLException;
 
     public Convite registrarConvite(Convite convite) throws SQLException;
 

@@ -8,7 +8,7 @@ import java.util.List;
 public interface INotificacaoDAO {
     public List<Notificacao> buscarTodosNotificacoes() throws SQLException;
 
-    public Notificacao buscarNotificacaoId(Long id) throws SQLException;
+    public Notificacao buscarNotificacaoId(Integer id) throws SQLException;
 
     public Notificacao registrarNotificacao(Notificacao notificacao) throws SQLException;
 

@@ -8,7 +8,7 @@ import java.util.List;
 public interface ITarefaDAO {
     public List<Tarefa> buscarTodosTarefa() throws SQLException;
 
-    public Tarefa buscarTarefaId(Long id) throws SQLException;
+    public Tarefa buscarTarefaId(Integer id) throws SQLException;
 
     public Tarefa buscarTarefaNome(String nome) throws SQLException;
 

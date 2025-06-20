@@ -8,11 +8,11 @@ import java.util.List;
 public interface IComentarioDAO {
     public List<Comentario> buscarTodosComentarios() throws SQLException;
 
-    public Comentario buscarComentarioIdUsuario(Long idUsuario) throws SQLException;
+    public Comentario buscarComentarioIdUsuario(Integer idUsuario) throws SQLException;
 
-    public Comentario buscarComentarioIdTarefa(Long idTarefa) throws SQLException;
+    public Comentario buscarComentarioIdTarefa(Integer idTarefa) throws SQLException;
 
-    public Comentario registrarComentario(Comentario comentario) throws SQLException;
+    public void registrarComentario(Comentario comentario) throws SQLException;
 
     public void excluirComentario(Comentario comentario) throws SQLException;
 
