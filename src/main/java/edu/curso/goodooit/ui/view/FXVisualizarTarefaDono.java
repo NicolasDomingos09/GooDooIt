@@ -16,7 +16,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class VisualizarTarefaDono extends Application {
+public class FXVisualizarTarefaDono extends Application {
 
     private boolean menuVisivel = false;
     private Button botaoMenu;

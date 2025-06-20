@@ -9,7 +9,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class ExemploModal extends Application {
+public class FXExemploModal extends Application {
 
     @Override
     public void start(Stage primaryStage) {
