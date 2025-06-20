@@ -20,8 +20,13 @@ public class DataBaseConnection {
         this.port = port;
     }
 
-    public Connection getConnection() throws SQLException, ClassNotFoundException {
-        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+    public Connection getConnection() throws SQLException {
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
         Connection connection = DriverManager.getConnection(String.format("jdbc:sqlserver://%s:%s;databaseName=%s;user=%s;password=%s;encrypt=false",
                                                                 host, port, databaseName, user, password));
         return connection;
