@@ -12,7 +12,7 @@ public class LoginService {
         this.usuarioDAO = usuarioDAO;
     }
 
-    public Usuario efetuarService(String login, String senha) throws SQLException{
+    public Usuario efetuarLogin(String login, String senha) throws SQLException{
         Integer id = usuarioDAO.validarSenha(login,senha);
         if(id != null){
             return usuarioDAO.buscarUsuarioID(id);

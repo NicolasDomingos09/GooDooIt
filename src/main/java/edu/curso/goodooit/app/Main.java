@@ -1,12 +1,8 @@
 package edu.curso.goodooit.app;
 
-import edu.curso.goodooit.domain.model.Notificacao;
-import edu.curso.goodooit.domain.model.Projeto;
-import edu.curso.goodooit.domain.model.Usuario;
+import edu.curso.goodooit.domain.model.*;
 import edu.curso.goodooit.infra.database.DataBaseConnection;
-import edu.curso.goodooit.infra.repository.NotificacaoDAO;
-import edu.curso.goodooit.infra.repository.ProjetoDAO;
-import edu.curso.goodooit.infra.repository.UsuarioDAO;
+import edu.curso.goodooit.infra.repository.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -14,29 +10,38 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main{
+public class Main {
     public static void main(String[] args) {
         //Teste DB Conn
-        DataBaseConnection sql  = new DataBaseConnection("GooDooIt","sa",
-                                                    "Nick159642@","localhost", 1433);
-
-        //Teste DAO notificacao
-        NotificacaoDAO notificacaoDAO = new NotificacaoDAO(sql);
+        DataBaseConnection sql = new DataBaseConnection("GooDooIt", "sa",
+                "Nick159642@", "localhost", 1433);
+        //Testes
+        ComentarioDAO comentarioDAO = new ComentarioDAO(sql); //Preciso testar ainda com o banco novo
+        ConviteDAO conviteDAO = new ConviteDAO(sql);
 
         try {
-            List< Notificacao > notificacaos = notificacaoDAO.buscarTodosNotificacoes();
-            notificacaos.forEach(n -> System.out.println(n.toString()));
-//            System.out.println(notificacaoDAO.buscarNotificacaoId(500007).toString());
+            var lista = conviteDAO.buscarTodosConvites();
+            lista.forEach(convite -> System.out.println(convite.toString()));
+            System.out.printf("%n");
 
-            Notificacao n = notificacaoDAO.buscarNotificacaoId(500010);
-//            n = notificacaoDAO.registrarNotificacao(n);
-//            n.setTitulo("vamo ve");
+            lista = conviteDAO.buscarConviteIdProjeto(2025100);
+            lista.forEach(convite -> System.out.println(convite.toString()));
+            System.out.printf("%n");
 
-//            notificacaoDAO.excluirNotificacao(n);
+            lista = conviteDAO.buscarConviteIdDestinatario(10008);
+            lista.forEach(convite -> System.out.println(convite.toString()));
+            System.out.printf("%n");
 
-//            notificacaoDAO.atualizarNotificacao(n);
-//            System.out.println(notificacaoDAO.buscarNotificacaoId(n.getID()).toString());
-//
+            lista = conviteDAO.buscarConviteIdRemetente(10002);
+            lista.forEach(convite -> System.out.println(convite.toString()));
+            System.out.printf("%n");
+
+            var c  = conviteDAO.buscarConvite(2025100, 10002,10001);
+            System.out.println(c.toString());
+
+            conviteDAO.registrarConvite(c);
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }

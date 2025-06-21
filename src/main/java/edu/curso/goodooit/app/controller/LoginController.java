@@ -5,6 +5,8 @@ import edu.curso.goodooit.domain.model.Usuario;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.sql.SQLException;
+
 //A controller de login pega as informações na ui.vew e requisita na service (use case)
 
 public class LoginController {
@@ -25,8 +27,8 @@ public class LoginController {
         this.service = service;
     }
 
-    public boolean efetuarLogin(StringProperty login, StringProperty senha) {
-        Usuario user = service.efetuarLogin();
+    public boolean efetuarLogin(StringProperty login, StringProperty senha) throws SQLException {
+        Usuario user = service.efetuarLogin(login.get(), senha.get());
         if (user == null) {
             login.set(" ");
             senha.set(" ");

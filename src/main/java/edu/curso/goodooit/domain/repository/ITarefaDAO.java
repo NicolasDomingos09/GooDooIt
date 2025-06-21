@@ -12,6 +12,12 @@ public interface ITarefaDAO {
 
     public Tarefa buscarTarefaNome(String nome) throws SQLException;
 
+    public List<Tarefa> buscarTarefaIdResponsavel(Integer idResponsavel) throws SQLException;
+
+    public List<Tarefa> buscarTarefaIdCriador(Integer idCriador) throws SQLException;
+
+    public List<Tarefa> buscarTarefaIdLista(Integer idLista) throws SQLException;
+
     public List<Tarefa> buscarTarefaPrioridade(int prioridade) throws SQLException;
 
     public Tarefa registrarTarefa(Tarefa tarefa) throws SQLException;
