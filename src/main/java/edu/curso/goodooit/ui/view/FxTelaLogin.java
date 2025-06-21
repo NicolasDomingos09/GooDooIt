@@ -16,6 +16,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.sql.SQLException;
+
 public class FxTelaLogin extends Application {
 
     private LoginController loginController;
@@ -61,8 +63,14 @@ public class FxTelaLogin extends Application {
             if (this.loginController == null) {
                 mensagemErro.setVisible(true);
                 System.out.println("É UM TESTE, ME APAGA!!!");
-            } else if (!loginController.efetuarLogin(usernameField.textProperty(), passwordField.textProperty())) {
-                mensagemErro.setVisible(true);
+            } else {
+                try {
+                    if (!loginController.efetuarLogin(usernameField.textProperty(), passwordField.textProperty())) {
+                        mensagemErro.setVisible(true);
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 

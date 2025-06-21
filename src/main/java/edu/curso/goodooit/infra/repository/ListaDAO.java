@@ -108,7 +108,7 @@ public class ListaDAO implements IListaDAO {
         String sql = """
                 SELECT l.*
                 FROM lista l
-                INNER JOIN lista_quadro lq ON l.id = lq.id
+                INNER JOIN lista_quadro lq ON l.id = lq.ListaID
                 WHERE lq.QuadroID = ?;
                 """;
         List<Lista> listas = new ArrayList<>();
