@@ -71,13 +71,20 @@ public class ListaDAO implements IListaDAO {
     }
 
     @Override
-    public void registrarLista(Lista lista) throws SQLException {
+    public Integer registrarLista(Lista lista) throws SQLException {
         String sql = "INSERT INTO lista (titulo) VALUES (?)";
         try (Connection conn = dbConn.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);) {
+             PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);) {
             stmt.setString(1, lista.getTitulo());
             int linhas = stmt.executeUpdate();
             System.out.println("Linhas afetadas: " + linhas);
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                } else {
+                    throw new SQLException("Novo ID não encontrado");
+                }
+            }
         }
     }
 

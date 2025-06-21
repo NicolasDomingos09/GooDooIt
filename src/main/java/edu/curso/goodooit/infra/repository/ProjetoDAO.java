@@ -16,16 +16,16 @@ public class ProjetoDAO implements IProjetoDAO {
     }
 
     private Projeto construirProjeto(ResultSet rs) throws SQLException {
-        Projeto p = new Projeto();
-        p.setID(rs.getInt("ID"));
-        p.setNome(rs.getString("nome"));
-        p.setDescricao(rs.getString("descricao"));
-        p.setDataInicio(rs.getDate("data_inicio").toLocalDate());
-        p.setDataFim(rs.getDate("data_fim").toLocalDate());
-        p.setDataCriacao(rs.getDate("data_criacao").toLocalDate());
-        p.setStatusProjetoID(rs.getInt("Status_ProjetoID"));
-        p.setLiderID(rs.getInt("LiderID"));
-        return p;
+        return new Projeto(
+                rs.getInt("ID"),
+                rs.getString("nome"),
+                rs.getString("descricao"),
+                rs.getDate("data_inicio").toLocalDate(),
+                rs.getDate("data_fim").toLocalDate(),
+                rs.getDate("data_criacao").toLocalDate(),
+                rs.getInt("Status_ProjetoID"),
+                rs.getInt("LiderID")
+        );
     }
 
     @Override
@@ -111,20 +111,20 @@ public class ProjetoDAO implements IProjetoDAO {
     }
 
     @Override
-    public void registrarProjeto(Projeto projeto) throws SQLException {
+    public Integer registrarProjeto(Projeto projeto) throws SQLException {
         String sql = """
-            INSERT INTO Projeto (
-                nome,
-                descricao,
-                data_inicio,
-                data_fim,
-                data_criacao,
-                Status_ProjetoID,
-                LiderID
-            ) VALUES (?, ?, ?, ?, ?, ?, ?)
-        """;
+                    INSERT INTO Projeto (
+                        nome,
+                        descricao,
+                        data_inicio,
+                        data_fim,
+                        data_criacao,
+                        Status_ProjetoID,
+                        LiderID
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                """;
         try (Connection conn = dbConn.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setString(1, projeto.getNome());
             stmt.setString(2, projeto.getDescricao());
@@ -136,6 +136,13 @@ public class ProjetoDAO implements IProjetoDAO {
 
             int linhas = stmt.executeUpdate();
             System.out.println("Linhas afetadas: " + linhas);
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                } else {
+                    throw new SQLException("Novo ID não encontrado");
+                }
+            }
         }
     }
 

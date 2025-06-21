@@ -16,7 +16,7 @@ public interface IProjetoDAO {
 
     public Projeto buscarProjetoNome(String nome) throws SQLException;
 
-    public void registrarProjeto(Projeto projeto) throws SQLException;
+    public Integer registrarProjeto(Projeto projeto) throws SQLException;
 
     public void excluirProjeto(Projeto projeto) throws SQLException;
 

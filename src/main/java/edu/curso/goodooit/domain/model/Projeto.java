@@ -14,6 +14,17 @@ public class Projeto {
 
     public Projeto() {}
 
+    public Projeto(Integer ID, String nome, String descricao, LocalDate dataInicio, LocalDate dataFim, LocalDate dataCriacao, Integer statusProjetoID, Integer liderID) {
+        this.ID = ID;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.dataInicio = dataInicio;
+        this.dataFim = dataFim;
+        this.dataCriacao = dataCriacao;
+        StatusProjetoID = statusProjetoID;
+        LiderID = liderID;
+    }
+
     public Projeto(String nome, String descricao, LocalDate dataInicio, LocalDate dataFim, LocalDate dataCriacao) {
         this.nome = nome;
         this.descricao = descricao;

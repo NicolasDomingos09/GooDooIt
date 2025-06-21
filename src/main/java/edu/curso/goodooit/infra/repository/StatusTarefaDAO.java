@@ -29,8 +29,8 @@ public class StatusTarefaDAO implements IStatusTarefaDAO {
         String sql = "SELECT * FROM status_tarefa";
         List<StatusTarefa> lista = new ArrayList<>();
         try (Connection conn = dbConn.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 lista.add(construirStatusTarefa(rs));
             }
@@ -42,9 +42,9 @@ public class StatusTarefaDAO implements IStatusTarefaDAO {
     public StatusTarefa buscarStatusTarefaId(Integer id) throws SQLException {
         String sql = "SELECT * FROM status_tarefa WHERE id = ?";
         try (Connection conn = dbConn.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            try (ResultSet rs = ps.executeQuery()) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     return construirStatusTarefa(rs);
                 }
@@ -54,33 +54,24 @@ public class StatusTarefaDAO implements IStatusTarefaDAO {
     }
 
     @Override
-    public StatusTarefa registrarStatusTarefa(StatusTarefa statusTarefa) throws SQLException {
+    public Integer registrarStatusTarefa(StatusTarefa statusTarefa) throws SQLException {
         String sqlInsert = "INSERT INTO status_tarefa (nome, descricao, ProjetoID) VALUES (?, ?, ?)";
         try (Connection conn = dbConn.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement stmt = conn.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS)) {
 
-            ps.setString(1, statusTarefa.getNome());
-            ps.setString(2, statusTarefa.getDescricao());
-            ps.setInt(3, statusTarefa.getProjetoID());
+            stmt.setString(1, statusTarefa.getNome());
+            stmt.setString(2, statusTarefa.getDescricao());
+            stmt.setInt(3, statusTarefa.getProjetoID());
 
-            int linhas = ps.executeUpdate();
-
-            try (ResultSet keys = ps.getGeneratedKeys()) {
-                if (keys.next()) {
-                    int novoID = keys.getInt(1);
-                    // Recupera e retorna o objeto completo
-                    String sqlSelect = "SELECT * FROM status_tarefa WHERE id = ?";
-                    try (PreparedStatement psSel = conn.prepareStatement(sqlSelect)) {
-                        psSel.setInt(1, novoID);
-                        try (ResultSet rs = psSel.executeQuery()) {
-                            if (rs.next()) {
-                                return construirStatusTarefa(rs);
-                            }
-                        }
-                    }
+            int linhas = stmt.executeUpdate();
+            System.out.println("Linhas afetadas: " + linhas);
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                } else {
+                    throw new SQLException("Novo ID não encontrado");
                 }
             }
-            throw new SQLException("Falha ao obter ID do status de tarefa inserido.");
         }
     }
 
@@ -89,9 +80,9 @@ public class StatusTarefaDAO implements IStatusTarefaDAO {
         String sql = "SELECT * FROM status_tarefa WHERE ProjetoID = ?";
         List<StatusTarefa> lista = new ArrayList<>();
         try (Connection conn = dbConn.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, idProjeto);
-            try (ResultSet rs = ps.executeQuery()) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idProjeto);
+            try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     lista.add(construirStatusTarefa(rs));
                 }
@@ -104,9 +95,9 @@ public class StatusTarefaDAO implements IStatusTarefaDAO {
     public void excluirStatusTarefa(StatusTarefa statusTarefa) throws SQLException {
         String sql = "DELETE FROM status_tarefa WHERE id = ?";
         try (Connection conn = dbConn.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, statusTarefa.getID());
-            int linhas = ps.executeUpdate();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, statusTarefa.getID());
+            int linhas = stmt.executeUpdate();
             System.out.println("Linhas afetadas: " + linhas);
         }
     }
@@ -116,12 +107,12 @@ public class StatusTarefaDAO implements IStatusTarefaDAO {
         String sql =
                 "UPDATE status_tarefa SET nome = ?, descricao = ?, ProjetoID = ? WHERE id = ?";
         try (Connection conn = dbConn.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, statusTarefa.getNome());
-            ps.setString(2, statusTarefa.getDescricao());
-            ps.setInt(3, statusTarefa.getProjetoID());
-            ps.setInt(4, statusTarefa.getID());
-            int linhas = ps.executeUpdate();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, statusTarefa.getNome());
+            stmt.setString(2, statusTarefa.getDescricao());
+            stmt.setInt(3, statusTarefa.getProjetoID());
+            stmt.setInt(4, statusTarefa.getID());
+            int linhas = stmt.executeUpdate();
             System.out.println("Linhas afetadas: " + linhas);
         }
     }

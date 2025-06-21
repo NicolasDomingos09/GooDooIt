@@ -10,7 +10,7 @@ public interface INotificacaoDAO {
 
     public Notificacao buscarNotificacaoId(Integer id) throws SQLException;
 
-    public Notificacao registrarNotificacao(Notificacao notificacao) throws SQLException;
+    public Integer registrarNotificacao(Notificacao notificacao) throws SQLException;
 
     public void excluirNotificacao(Notificacao notificacao) throws SQLException;
 

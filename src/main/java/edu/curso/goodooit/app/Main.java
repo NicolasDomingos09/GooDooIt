@@ -1,5 +1,6 @@
 package edu.curso.goodooit.app;
 
+import edu.curso.goodooit.app.usecase.ProjetoService;
 import edu.curso.goodooit.domain.model.*;
 import edu.curso.goodooit.infra.database.DataBaseConnection;
 import edu.curso.goodooit.infra.repository.*;
@@ -18,30 +19,13 @@ public class Main {
         //Testes
         ComentarioDAO comentarioDAO = new ComentarioDAO(sql); //Preciso testar ainda com o banco novo
         ConviteDAO conviteDAO = new ConviteDAO(sql);
-
+        ProjetoDAO projetoDAO = new ProjetoDAO(sql);
+        UsuarioDAO uDAO = new UsuarioDAO(sql);
         try {
-            var lista = conviteDAO.buscarTodosConvites();
-            lista.forEach(convite -> System.out.println(convite.toString()));
-            System.out.printf("%n");
-
-            lista = conviteDAO.buscarConviteIdProjeto(2025100);
-            lista.forEach(convite -> System.out.println(convite.toString()));
-            System.out.printf("%n");
-
-            lista = conviteDAO.buscarConviteIdDestinatario(10008);
-            lista.forEach(convite -> System.out.println(convite.toString()));
-            System.out.printf("%n");
-
-            lista = conviteDAO.buscarConviteIdRemetente(10002);
-            lista.forEach(convite -> System.out.println(convite.toString()));
-            System.out.printf("%n");
-
-            var c  = conviteDAO.buscarConvite(2025100, 10002,10001);
-            System.out.println(c.toString());
-
-            conviteDAO.registrarConvite(c);
-
-
+            ProjetoService ps = new ProjetoService(projetoDAO,conviteDAO);
+            var u = uDAO.buscarUsuarioLogin("ana");
+            Projeto projeto = ps.criarProjeto("teste1", "testando service", LocalDate.now(), LocalDate.now(), u.getID());
+            System.out.println(projeto.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }

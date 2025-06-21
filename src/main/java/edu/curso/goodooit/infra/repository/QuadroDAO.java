@@ -5,10 +5,7 @@ import edu.curso.goodooit.domain.model.Quadro;
 import edu.curso.goodooit.domain.repository.IQuadroDAO;
 import edu.curso.goodooit.infra.database.DataBaseConnection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,15 +44,22 @@ public class QuadroDAO implements IQuadroDAO {
     }
 
     @Override
-    public void criarQuadros(String titulo, Integer idProjeto) throws SQLException {
+    public Integer criarQuadros(String titulo, Integer idProjeto) throws SQLException {
         String sql = "INSERT INTO quadro (ID,titulo, projetoID) VALUES (?, ?, ?)";
         try (Connection conn = dbConn.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);) {
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
             stmt.setInt(1, 2025555);
             stmt.setString(2, titulo);
             stmt.setInt(3, idProjeto);
             int linhas = stmt.executeUpdate();
             System.out.println("Linhas afetadas: " + linhas);
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                } else {
+                    throw new SQLException("Novo ID não encontrado");
+                }
+            }
         }
     }
 
