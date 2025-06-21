@@ -154,7 +154,7 @@ public class FXVisualizarMembrosProjeto extends Application {
         menu.setStyle("-fx-background-color: white; -fx-border-color: lightgray; -fx-min-width: 250px; -fx-max-width: 250px;");
         menu.setAlignment(Pos.TOP_CENTER);
 
-        ImageView avatar = new ImageView(new Image("/Goo.png"));
+        ImageView avatar = new ImageView(new Image("/images/Goo.png"));
         avatar.setFitHeight(80);
         avatar.setFitWidth(80);
 

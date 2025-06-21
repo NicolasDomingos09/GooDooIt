@@ -123,7 +123,7 @@ public class FXExemploModalReserva extends Application {
         
         Image avatarImage = new Image(getClass().getResourceAsStream("/images/Goo.png"), 100, 100, true, true);
         ImageView avatarView = new ImageView(avatarImage);
-        ImageView ghost = new ImageView(new Image(getClass().getResourceAsStream("/Goo.png"), 100, 100, true, true)); // você deve ter esta imagem no recurso
+        ImageView ghost = new ImageView(new Image(getClass().getResourceAsStream("/images/Goo.png"), 100, 100, true, true)); // você deve ter esta imagem no recurso
         ghost.setFitHeight(80);
         ghost.setFitWidth(80);
         
@@ -388,9 +388,9 @@ public class FXExemploModalReserva extends Application {
         titulo.setStyle("-fx-font-size: 22px; -fx-font-family: monospace; -fx-text-fill: black;");
 
         // Imagem do fantasminha
-        Image avatarImage = new Image(getClass().getResourceAsStream("/Goo.png"), 100, 100, true, true);
+        Image avatarImage = new Image(getClass().getResourceAsStream("/images/Goo.png"), 100, 100, true, true);
         ImageView avatarView = new ImageView(avatarImage);
-        ImageView ghost = new ImageView(new Image(getClass().getResourceAsStream("/Goo.png"), 100, 100, true, true)); // você deve ter esta imagem no recurso
+        ImageView ghost = new ImageView(new Image(getClass().getResourceAsStream("/images/Goo.png"), 100, 100, true, true)); // você deve ter esta imagem no recurso
         ghost.setFitHeight(80);
         ghost.setFitWidth(80);
 
@@ -476,9 +476,9 @@ public class FXExemploModalReserva extends Application {
         conteudo.setStyle("-fx-background-color: #E6E6E6; -fx-background-radius: 20;");
         
         // Imagem do fantasminha
-        Image avatarImage = new Image(getClass().getResourceAsStream("/Goo.png"), 100, 100, true, true);
+        Image avatarImage = new Image(getClass().getResourceAsStream("/images/Goo.png"), 100, 100, true, true);
         ImageView avatarView = new ImageView(avatarImage);
-        ImageView ghost = new ImageView(new Image(getClass().getResourceAsStream("/Goo.png"), 100, 100, true, true)); // você deve ter esta imagem no recurso
+        ImageView ghost = new ImageView(new Image(getClass().getResourceAsStream("/images/Goo.png"), 100, 100, true, true)); // você deve ter esta imagem no recurso
         ghost.setFitHeight(80);
         ghost.setFitWidth(80);
         
