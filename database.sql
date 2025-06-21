@@ -50,7 +50,7 @@ CREATE TABLE Projeto(
 );
 
 
-CREATE TABLE Equipe(
+CREATE TABLE Usuario_Projeto(
 	UsuarioID int NOT NULL,
 	ProjetoID int NOT NULL,
 	PRIMARY KEY(UsuarioID, ProjetoID),
@@ -73,6 +73,13 @@ CREATE TABLE Lista(
 	ID int IDENTITY NOT NULL,
 	titulo varchar(100) NOT NULL
 	PRIMARY KEY(ID)
+);
+
+CREATE TABLE Usuario_Lista(
+	UsuarioID int,
+	ListaID int,
+	FOREIGN KEY(UsuarioID) REFERENCES Usuario(ID),
+	FOREIGN KEY(ListaID) REFERENCES Lista(ID)
 );
 
 CREATE TABLE Lista_Quadro(
@@ -116,24 +123,23 @@ CREATE TABLE Tarefa(
 );
 
 CREATE TABLE Convite(
-	ID int IDENTITY(400000, 1),
 	RemetenteID int NOT NULL,
 	ProjetoID int NOT NULL,
 	DestinatarioID int NOT NULL,
 	data_criacao DATE NOT NULL DEFAULT(GETDATE()),
 	CONSTRAINT chk_remetente_destinario CHECK(RemetenteID <> DestinatarioID),
-	PRIMARY KEY(ID, RemetenteID, ProjetoID, DestinatarioID),
+	PRIMARY KEY(RemetenteID, ProjetoID, DestinatarioID),
 	FOREIGN KEY(ProjetoID) REFERENCES Projeto(ID),
 	FOREIGN KEY(RemetenteID) REFERENCES Usuario(ID),
 	FOREIGN KEY(DestinatarioID) REFERENCES Usuario(ID)
 );
 
 CREATE TABLE Comentario(
-  ID int IDENTITY(300000, 1), 
 	TarefaID int NOT NULL,
 	UsuarioID int NOT NULL,
 	texto varchar(255) NOT NULL,
-	PRIMARY KEY(ID, TarefaID, UsuarioID),
+	dataCriacao date,
+	PRIMARY KEY(TarefaID, UsuarioID),
 	FOREIGN KEY(TarefaID) REFERENCES Tarefa(ID),
 	FOREIGN KEY(UsuarioID) REFERENCES Usuario(ID)
 );
@@ -182,7 +188,7 @@ INSERT INTO Projeto (nome, descricao, data_inicio, data_fim, data_criacao, Statu
 ('Controle de Estoque', 'Gestão de produtos', '2025-01-10', '2025-09-10', GETDATE(), 1, 10009);
 -- SET IDENTITY_INSERT Projeto OFF;
 
-INSERT INTO Equipe (UsuarioID, ProjetoID) VALUES
+INSERT INTO Usuario_Projeto (UsuarioID, ProjetoID) VALUES
 (10000, 2025100),
 (10001, 2025100),
 (10002, 2025101),
@@ -232,6 +238,18 @@ INSERT INTO Lista (titulo) VALUES
 ('Testes'),
 ('Pronto para Produção'),
 ('Arquivado');
+
+INSERT INTO Usuario_Lista
+VALUES (10001, 1),
+	   (10004, 2),
+	   (10002, 3),
+	   (10005, 7),
+	   (10005, 3),
+	   (10001, 8),
+	   (10002, 9),
+	   (10003, 2),
+	   (10004, 1),
+	   (10005, 7);
 
 
 INSERT INTO Lista_Quadro (ListaID, QuadroID) VALUES
@@ -297,14 +315,16 @@ PRINT CHAR(13) + CHAR(10) + "Tabela Status_Projeto";
 SELECT * FROM Status_Projeto;
 PRINT CHAR(13) + CHAR(10) + "Tabela Notificacao";
 SELECT * FROM Notificacao;
-PRINT CHAR(13) + CHAR(10) + "Tabela Equipe";
-SELECT * FROM Equipe;
+PRINT CHAR(13) + CHAR(10) + "Tabela Usuario_Projeto";
+SELECT * FROM Usuario_Projeto;
 PRINT CHAR(13) + CHAR(10) + "Tabela Usuario_Notificacao";
 SELECT * FROM Usuario_Notificacao;
 PRINT CHAR(13) + CHAR(10) + "Tabela Quadro";
 SELECT * FROM Quadro;
 PRINT CHAR(13) + CHAR(10) + "Tabela Lista";
 SELECT * FROM Lista;
+PRINT CHAR(13) + CHAR(10) + "Tabela Usuario_Lista";
+SELECT * FROM Usuario_Lista;
 PRINT CHAR(13) + CHAR(10) + "Tabela Lista_Quadro";
 SELECT * FROM Lista_Quadro;
 PRINT CHAR(13) + CHAR(10) + "Tabela Status_Tarefa";

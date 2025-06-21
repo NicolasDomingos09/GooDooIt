@@ -11,7 +11,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class FXExemploModal extends Application {
+public class FXExemploModalReserva extends Application {
 
     @Override
     public void start(Stage primaryStage) {
@@ -69,13 +69,13 @@ public class FXExemploModal extends Application {
         double largura = Screen.getPrimary().getBounds().getWidth();
         double altura = Screen.getPrimary().getBounds().getHeight();
 
-        VBox conteudoModal = new VBox(10);
-        conteudoModal.setPadding(new Insets(20));
-        conteudoModal.setAlignment(Pos.CENTER_LEFT);
-        conteudoModal.setMaxWidth(largura * 0.5);
-        conteudoModal.setMaxHeight(altura * 0.5);
-        conteudoModal.setStyle("-fx-background-color: #A58ACA; -fx-background-radius: 10;");
-
+        VBox conteudoModal = new VBox(15);
+        conteudoModal.setPadding(new Insets(30));
+        conteudoModal.setAlignment(Pos.CENTER);
+        conteudoModal.setMaxWidth(largura * 0.4);
+        conteudoModal.setMaxHeight(altura * 0.45);
+        conteudoModal.setStyle("-fx-background-color: #E6E6E6; -fx-background-radius: 20;");
+        
         TextField tfNome = new TextField();
         TextArea taDescricao = new TextArea();
         TextField tfInicio = new TextField();
@@ -117,9 +117,9 @@ public class FXExemploModal extends Application {
         VBox conteudo = new VBox(15);
         conteudo.setPadding(new Insets(30));
         conteudo.setAlignment(Pos.CENTER);
-        conteudo.setMaxWidth(largura * 0.35);
-        conteudo.setMaxHeight(altura * 0.4);
-        conteudo.setStyle("-fx-background-color: linear-gradient(to bottom, #EEE1F8, #DCCEF0); -fx-background-radius: 20;");
+        conteudo.setMaxWidth(largura * 0.4);
+        conteudo.setMaxHeight(altura * 0.45);
+        conteudo.setStyle("-fx-background-color: #E6E6E6; -fx-background-radius: 20;");
         
         Image avatarImage = new Image(getClass().getResourceAsStream("/images/Goo.png"), 100, 100, true, true);
         ImageView avatarView = new ImageView(avatarImage);
@@ -166,9 +166,9 @@ public class FXExemploModal extends Application {
         VBox conteudo = new VBox(15);
         conteudo.setPadding(new Insets(30));
         conteudo.setAlignment(Pos.CENTER);
-        conteudo.setMaxWidth(largura * 0.35);
-        conteudo.setMaxHeight(altura * 0.4);
-        conteudo.setStyle("-fx-background-color: linear-gradient(to bottom, #EEE1F8, #DCCEF0); -fx-background-radius: 20;");
+        conteudo.setMaxWidth(largura * 0.4);
+        conteudo.setMaxHeight(altura * 0.45);
+        conteudo.setStyle("-fx-background-color: #E6E6E6; -fx-background-radius: 20;");
         
         Label titulo = new Label("🔄 Reatribuir tarefa");
         titulo.setStyle("-fx-font-size: 22px; -fx-text-fill: #6A0DAD; -fx-font-weight: bold;");
@@ -212,9 +212,9 @@ public class FXExemploModal extends Application {
         VBox conteudo = new VBox(15);
         conteudo.setPadding(new Insets(30));
         conteudo.setAlignment(Pos.CENTER);
-        conteudo.setMaxWidth(largura * 0.35);
-        conteudo.setMaxHeight(altura * 0.4);
-        conteudo.setStyle("-fx-background-color: linear-gradient(to bottom, #EEE1F8, #DCCEF0); -fx-background-radius: 20;");
+        conteudo.setMaxWidth(largura * 0.4);
+        conteudo.setMaxHeight(altura * 0.45);
+        conteudo.setStyle("-fx-background-color: #E6E6E6; -fx-background-radius: 20;");
         
         Label titulo = new Label("🔐 Alterar Senha");
         titulo.setStyle("-fx-font-size: 24px; -fx-text-fill: #6A0DAD; -fx-font-weight: bold;");
@@ -271,13 +271,14 @@ public class FXExemploModal extends Application {
     public StackPane criarModalNovaTarefa(Runnable acaoSalvarTarefa) {
         double largura = Screen.getPrimary().getBounds().getWidth();
         double altura = Screen.getPrimary().getBounds().getHeight();
-        
+
         VBox conteudo = new VBox(15);
         conteudo.setPadding(new Insets(30));
         conteudo.setAlignment(Pos.CENTER);
-        conteudo.setMaxWidth(largura * 0.35);
-        conteudo.setMaxHeight(altura * 0.4);
-        conteudo.setStyle("-fx-background-color: linear-gradient(to bottom, #EEE1F8, #DCCEF0); -fx-background-radius: 20;");
+        conteudo.setMaxWidth(largura * 0.4);
+        conteudo.setMaxHeight(altura * 0.45);
+        conteudo.setStyle("-fx-background-color: #E6E6E6; -fx-background-radius: 20;");
+        
         Label titulo = new Label("📋 Nova Tarefa");
         titulo.setStyle("-fx-font-size: 24px; -fx-text-fill: #6A0DAD; -fx-font-weight: bold;");
 
@@ -371,14 +372,14 @@ public class FXExemploModal extends Application {
         double largura = Screen.getPrimary().getBounds().getWidth();
         double altura = Screen.getPrimary().getBounds().getHeight();
 
-        VBox conteudoModal = new VBox(15);
-        conteudoModal.setPadding(new Insets(30));
-        conteudoModal.setAlignment(Pos.CENTER);
-        conteudoModal.setMaxWidth(largura * 0.35);
-        conteudoModal.setMaxHeight(altura * 0.4);
-        conteudoModal.setStyle("-fx-background-color: linear-gradient(to bottom, #EEE1F8, #DCCEF0); -fx-background-radius: 20;");
-
-        StackPane fundo = new StackPane(conteudoModal);
+        VBox conteudo = new VBox(15);
+        conteudo.setPadding(new Insets(30));
+        conteudo.setAlignment(Pos.CENTER);
+        conteudo.setMaxWidth(largura * 0.4);
+        conteudo.setMaxHeight(altura * 0.45);
+        conteudo.setStyle("-fx-background-color: #E6E6E6; -fx-background-radius: 20;");
+        
+        StackPane fundo = new StackPane(conteudo);
         fundo.setStyle("-fx-background-color: rgba(0, 0, 0, 0.4);");
         fundo.setVisible(false);
         fundo.setAlignment(Pos.CENTER);
@@ -413,7 +414,7 @@ public class FXExemploModal extends Application {
 
         VBox.setMargin(btnVoltar, new Insets(10, 0, 0, 0));
 
-        conteudoModal.getChildren().addAll(titulo, ghost, cuidado, instrucao, email, btnVoltar);
+        conteudo.getChildren().addAll(titulo, ghost, cuidado, instrucao, email, btnVoltar);
 
 
         return fundo;
@@ -423,13 +424,13 @@ public class FXExemploModal extends Application {
         double largura = Screen.getPrimary().getBounds().getWidth();
         double altura = Screen.getPrimary().getBounds().getHeight();
 
-        VBox conteudoModal = new VBox(15);
-        conteudoModal.setPadding(new Insets(30));
-        conteudoModal.setAlignment(Pos.CENTER);
-        conteudoModal.setMaxWidth(largura * 0.35);
-        conteudoModal.setMaxHeight(altura * 0.4);
-        conteudoModal.setStyle("-fx-background-color: linear-gradient(to bottom, #EEE1F8, #DCCEF0); -fx-background-radius: 20;");
-
+        VBox conteudo = new VBox(15);
+        conteudo.setPadding(new Insets(30));
+        conteudo.setAlignment(Pos.CENTER);
+        conteudo.setMaxWidth(largura * 0.4);
+        conteudo.setMaxHeight(altura * 0.45);
+        conteudo.setStyle("-fx-background-color: #E6E6E6; -fx-background-radius: 20;");
+        
         Label instrucao = new Label("Deseja realmente aceitar o convite para");
         instrucao.setStyle("-fx-font-size: 14px;");
         instrucao.setAlignment(Pos.CENTER);
@@ -447,9 +448,9 @@ public class FXExemploModal extends Application {
         HBox botoes = new HBox(15, btnReatribuir, btnCancelar);
         botoes.setAlignment(Pos.CENTER);
 
-        conteudoModal.getChildren().addAll(instrucao, titulo, botoes);
+        conteudo.getChildren().addAll(instrucao, titulo, botoes);
 
-        StackPane fundo = new StackPane(conteudoModal);
+        StackPane fundo = new StackPane(conteudo);
         fundo.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
         fundo.setVisible(false);
         fundo.setAlignment(Pos.CENTER);
@@ -467,12 +468,12 @@ public class FXExemploModal extends Application {
         double largura = Screen.getPrimary().getBounds().getWidth();
         double altura = Screen.getPrimary().getBounds().getHeight();
 
-        VBox conteudoModal = new VBox(15);
-        conteudoModal.setPadding(new Insets(30));
-        conteudoModal.setAlignment(Pos.CENTER);
-        conteudoModal.setMaxWidth(largura * 0.35);
-        conteudoModal.setMaxHeight(altura * 0.4);
-        conteudoModal.setStyle("-fx-background-color: linear-gradient(to bottom, #EEE1F8, #DCCEF0); -fx-background-radius: 20;");
+        VBox conteudo = new VBox(15);
+        conteudo.setPadding(new Insets(30));
+        conteudo.setAlignment(Pos.CENTER);
+        conteudo.setMaxWidth(largura * 0.4);
+        conteudo.setMaxHeight(altura * 0.45);
+        conteudo.setStyle("-fx-background-color: #E6E6E6; -fx-background-radius: 20;");
         
         // Imagem do fantasminha
         Image avatarImage = new Image(getClass().getResourceAsStream("/Goo.png"), 100, 100, true, true);
@@ -506,9 +507,9 @@ public class FXExemploModal extends Application {
         HBox botoes = new HBox(15, btnReatribuir, btnCancelar);
         botoes.setAlignment(Pos.CENTER);
 
-        conteudoModal.getChildren().addAll(ghost, nomeCompleto, usuario, mensagem, projeto, botoes);
+        conteudo.getChildren().addAll(ghost, nomeCompleto, usuario, mensagem, projeto, botoes);
 
-        StackPane fundo = new StackPane(conteudoModal);
+        StackPane fundo = new StackPane(conteudo);
         fundo.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
         fundo.setVisible(false);
         fundo.setAlignment(Pos.CENTER);
@@ -529,10 +530,10 @@ public class FXExemploModal extends Application {
         VBox conteudoModal = new VBox(15);
         conteudoModal.setPadding(new Insets(30));
         conteudoModal.setAlignment(Pos.CENTER);
-        conteudoModal.setMaxWidth(largura * 0.35);
-        conteudoModal.setMaxHeight(altura * 0.4);
-        conteudoModal.setStyle("-fx-background-color: linear-gradient(to bottom, #EEE1F8, #DCCEF0); -fx-background-radius: 20;");
-
+        conteudoModal.setMaxWidth(largura * 0.4);
+        conteudoModal.setMaxHeight(altura * 0.45);
+        conteudoModal.setStyle("-fx-background-color: #E6E6E6; -fx-background-radius: 20;");
+        
         Label adicionarLista = new Label("Adicionar Lista em Projeto galo eletrônico");
         adicionarLista.setStyle("-fx-font-size: 20px;");
         adicionarLista.setMaxWidth(Double.MAX_VALUE);
