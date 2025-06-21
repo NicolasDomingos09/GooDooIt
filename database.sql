@@ -1,16 +1,14 @@
-CREATE
-DATABASE GooDooIt;
-USE
-GooDooIt;
+CREATE DATABASE GooDooIt;
+USE GooDooIt;
 
 CREATE TABLE Usuario
 (
-    ID INT IDENTITY(10000, 1) NOT NULL,
-    nome VARCHAR(100) NOT NULL,
-    sobrenome VARCHAR(100) NOT NULL,
-    login VARCHAR(100) UNIQUE NOT NULL,
-    senha VARCHAR(50) NOT NULL,
-    email VARCHAR(50) NOT NULL,
+    ID        INT IDENTITY (10000, 1) NOT NULL,
+    nome      VARCHAR(100)            NOT NULL,
+    sobrenome VARCHAR(100)            NOT NULL,
+    login     VARCHAR(100) UNIQUE     NOT NULL,
+    senha     VARCHAR(50)             NOT NULL,
+    email     VARCHAR(50)             NOT NULL,
     PRIMARY KEY (ID)
 );
 
@@ -19,16 +17,16 @@ CREATE TABLE Status_Projeto
     ID        int IDENTITY,
     nome      varchar(50) NOT NULL,
     descricao varchar(100)
-        PRIMARY KEY(ID)
+        PRIMARY KEY (ID)
 );
 
 CREATE TABLE Notificacao
 (
-    ID        int IDENTITY(500000, 1) NOT NULL,
-    titulo    varchar(100) NOT NULL,
-    descricao varchar(100) NOT NULL,
-    dataEnvio DATE         NOT NULL DEFAULT (GETDATE())
-        PRIMARY KEY(ID)
+    ID        int IDENTITY (500000, 1) NOT NULL,
+    titulo    varchar(100)             NOT NULL,
+    descricao varchar(100)             NOT NULL,
+    dataEnvio DATE                     NOT NULL DEFAULT (GETDATE())
+        PRIMARY KEY (ID)
 );
 
 CREATE TABLE Usuario_Notificacao
@@ -43,21 +41,21 @@ CREATE TABLE Usuario_Notificacao
 
 CREATE TABLE Projeto
 (
-    ID               int IDENTITY(2025100, 1) NOT NULL,
-    nome             varchar(100) NOT NULL,
+    ID               int IDENTITY (2025100, 1) NOT NULL,
+    nome             varchar(100)              NOT NULL,
     descricao        varchar(250),
-    data_inicio      date         NOT NULL,
-    data_fim         date         NOT NULL,
-    data_criacao     DATE         NOT NULL DEFAULT (GETDATE()),
-    Status_ProjetoID int          NOT NULL,
-    LiderID          int          NOT NULL
-        PRIMARY KEY(ID),
+    data_inicio      date                      NOT NULL,
+    data_fim         date                      NOT NULL,
+    data_criacao     DATE                      NOT NULL DEFAULT (GETDATE()),
+    Status_ProjetoID int                       NOT NULL,
+    LiderID          int                       NOT NULL
+        PRIMARY KEY (ID),
     FOREIGN KEY (Status_ProjetoID) REFERENCES Status_Projeto (ID),
     FOREIGN KEY (LiderID) REFERENCES Usuario (ID)
 );
 
 
-CREATE TABLE Equipe
+CREATE TABLE Usuario_Projeto
 (
     UsuarioID int NOT NULL,
     ProjetoID int NOT NULL,
@@ -69,9 +67,9 @@ CREATE TABLE Equipe
 
 CREATE TABLE Quadro
 (
-    ID        int IDENTITY(2025100, 1) NOT NULL,
-    titulo    varchar(100) NOT NULL,
-    ProjetoID int          NOT NULL,
+    ID        int IDENTITY (2025100, 1) NOT NULL,
+    titulo    varchar(100)              NOT NULL,
+    ProjetoID int                       NOT NULL,
 --	CONSTRAINT chk_quadro_id CHECK(ID BETWEEN ProjetoID + 1 AND ProjetoID + 3),
     PRIMARY KEY (ID),
     FOREIGN KEY (ProjetoID) REFERENCES Projeto (ID)
@@ -82,7 +80,15 @@ CREATE TABLE Lista
 (
     ID     int IDENTITY NOT NULL,
     titulo varchar(100) NOT NULL
-        PRIMARY KEY(ID)
+        PRIMARY KEY (ID)
+);
+
+CREATE TABLE Usuario_Lista
+(
+    UsuarioID int,
+    ListaID   int,
+    FOREIGN KEY (UsuarioID) REFERENCES Usuario (ID),
+    FOREIGN KEY (ListaID) REFERENCES Lista (ID)
 );
 
 CREATE TABLE Lista_Quadro
@@ -100,25 +106,25 @@ CREATE TABLE Status_Tarefa
     nome      varchar(50)  NOT NULL,
     descricao varchar(250) NOT NULL,
     ProjetoID int          NOT NULL
-        PRIMARY KEY(ID)
-	FOREIGN KEY(ProjetoID) REFERENCES Projeto(ID)
+        PRIMARY KEY (ID)
+        FOREIGN KEY (ProjetoID) REFERENCES Projeto (ID)
 );
 
 CREATE TABLE Tarefa
 (
-    ID              int IDENTITY(10000, 1) NOT NULL,
-    nome            varchar(100) NOT NULL,
+    ID              int IDENTITY (10000, 1) NOT NULL,
+    nome            varchar(100)            NOT NULL,
     descricao       varchar(250),
-    posicao         int          NOT NULL DEFAULT 1,
-    data_inicio     date         NOT NULL,
-    data_fim        date         NOT NULL,
-    data_criacao    DATE         NOT NULL DEFAULT (GETDATE()),
-    prioridade      int          NOT NULL DEFAULT 3,
-    Status_TarefaID int          NOT NULL,
-    QuadroID        int          NOT NULL,
-    ListaID         int          NOT NULL,
-    CriadorID       int          NOT NULL,
-    ResponsavelID   int          NOT NULL,
+    posicao         int                     NOT NULL DEFAULT 1,
+    data_inicio     date                    NOT NULL,
+    data_fim        date                    NOT NULL,
+    data_criacao    DATE                    NOT NULL DEFAULT (GETDATE()),
+    prioridade      int                     NOT NULL DEFAULT 3,
+    Status_TarefaID int                     NOT NULL,
+    QuadroID        int                     NOT NULL,
+    ListaID         int                     NOT NULL,
+    CriadorID       int                     NOT NULL,
+    ResponsavelID   int                     NOT NULL,
     -- CONSTRAINT chk_tarefa_id CHECK(ID >= (ListaID * 10) * 100 AND ID >= (ListaID * 10) * 1000),
     PRIMARY KEY (ID),
     FOREIGN KEY (Status_TarefaID) REFERENCES Status_Tarefa (ID),
@@ -130,13 +136,12 @@ CREATE TABLE Tarefa
 
 CREATE TABLE Convite
 (
-    ID             int IDENTITY(400000, 1),
     RemetenteID    int  NOT NULL,
     ProjetoID      int  NOT NULL,
     DestinatarioID int  NOT NULL,
     data_criacao   DATE NOT NULL DEFAULT (GETDATE()),
     CONSTRAINT chk_remetente_destinario CHECK (RemetenteID <> DestinatarioID),
-    PRIMARY KEY (ID, RemetenteID, ProjetoID, DestinatarioID),
+    PRIMARY KEY (RemetenteID, ProjetoID, DestinatarioID),
     FOREIGN KEY (ProjetoID) REFERENCES Projeto (ID),
     FOREIGN KEY (RemetenteID) REFERENCES Usuario (ID),
     FOREIGN KEY (DestinatarioID) REFERENCES Usuario (ID)
@@ -144,11 +149,11 @@ CREATE TABLE Convite
 
 CREATE TABLE Comentario
 (
-    ID        int IDENTITY(300000, 1),
-    TarefaID  int          NOT NULL,
-    UsuarioID int          NOT NULL,
-    texto     varchar(255) NOT NULL,
-    PRIMARY KEY (ID, TarefaID, UsuarioID),
+    TarefaID    int          NOT NULL,
+    UsuarioID   int          NOT NULL,
+    texto       varchar(255) NOT NULL,
+    dataCriacao date DEFAULT (GETDATE()),
+    PRIMARY KEY (TarefaID, UsuarioID),
     FOREIGN KEY (TarefaID) REFERENCES Tarefa (ID),
     FOREIGN KEY (UsuarioID) REFERENCES Usuario (ID)
 );
@@ -197,7 +202,7 @@ VALUES ('Sistema de Tarefas', 'Controle de tarefas e quadros', '2025-01-01', '20
        ('Controle de Estoque', 'Gestão de produtos', '2025-01-10', '2025-09-10', GETDATE(), 1, 10009);
 -- SET IDENTITY_INSERT Projeto OFF;
 
-INSERT INTO Equipe (UsuarioID, ProjetoID)
+INSERT INTO Usuario_Projeto (UsuarioID, ProjetoID)
 VALUES (10000, 2025100),
        (10001, 2025100),
        (10002, 2025101),
@@ -247,6 +252,18 @@ VALUES ('A Fazer'),
        ('Testes'),
        ('Pronto para Produção'),
        ('Arquivado');
+
+INSERT INTO Usuario_Lista
+VALUES (10001, 1),
+       (10004, 2),
+       (10002, 3),
+       (10005, 7),
+       (10005, 3),
+       (10001, 8),
+       (10002, 9),
+       (10003, 2),
+       (10004, 1),
+       (10005, 7);
 
 
 INSERT INTO Lista_Quadro (ListaID, QuadroID)
@@ -307,19 +324,42 @@ VALUES (10000, 10000, 'Início da modelagem'),
        (10008, 10000, 'Login funcional'),
        (10009, 10001, 'Tela de perfil em construção');
 
-DELETE FROM Projeto WHERE nome like 'Projeto teste'
-
-SELECT * FROM Usuario;
-SELECT * FROM Projeto WHERE nome like 'To testando de novo';
-SELECT * FROM Projeto;
-SELECT * FROM Comentario;
-SELECT * FROM Notificacao;
-SELECT * FROM Convite;
-SELECT * FROM Lista;
-SELECT * FROM Tarefa;
-SELECT * FROM Usuario_Notificacao;
-SELECT * FROM Equipe;
-SELECT * FROM Lista_Quadro;
-SELECT * FROM Quadro;
-SELECT * FROM Status_Projeto;
-SELECT * FROM Status_Tarefa;
+PRINT CHAR(13) + CHAR(10) + "Tabela Usuario";
+SELECT *
+FROM Usuario;
+PRINT CHAR(13) + CHAR(10) + "Tabela Status_Projeto";
+SELECT *
+FROM Status_Projeto;
+PRINT CHAR(13) + CHAR(10) + "Tabela Notificacao";
+SELECT *
+FROM Notificacao;
+PRINT CHAR(13) + CHAR(10) + "Tabela Usuario_Projeto";
+SELECT *
+FROM Usuario_Projeto;
+PRINT CHAR(13) + CHAR(10) + "Tabela Usuario_Notificacao";
+SELECT *
+FROM Usuario_Notificacao;
+PRINT CHAR(13) + CHAR(10) + "Tabela Quadro";
+SELECT *
+FROM Quadro;
+PRINT CHAR(13) + CHAR(10) + "Tabela Lista";
+SELECT *
+FROM Lista;
+PRINT CHAR(13) + CHAR(10) + "Tabela Usuario_Lista";
+SELECT *
+FROM Usuario_Lista;
+PRINT CHAR(13) + CHAR(10) + "Tabela Lista_Quadro";
+SELECT *
+FROM Lista_Quadro;
+PRINT CHAR(13) + CHAR(10) + "Tabela Status_Tarefa";
+SELECT *
+FROM Status_Tarefa;
+PRINT CHAR(13) + CHAR(10) + "Tabela Tarefa";
+SELECT *
+FROM Tarefa;
+PRINT CHAR(13) + CHAR(10) + "Tabela Convite";
+SELECT *
+FROM Convite;
+PRINT CHAR(13) + CHAR(10) + "Tabela Comentario";
+SELECT *
+FROM Comentario;
