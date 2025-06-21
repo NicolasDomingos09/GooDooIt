@@ -8,11 +8,15 @@ import java.util.List;
 public interface IProjetoDAO {
     public List<Projeto> buscarTodosProjetos() throws SQLException;
 
-    public Projeto buscarProjetoId(Long id) throws SQLException;
+    public Projeto buscarProjetoId(Integer id) throws SQLException;
+
+    public List<Projeto> buscarProjetoUsuarioLider(Integer idUsuario) throws SQLException;
+
+    public List<Projeto> buscarProjetoUsuarioColaborador(Integer idUsuario) throws SQLException;
 
     public Projeto buscarProjetoNome(String nome) throws SQLException;
 
-    public Projeto registrarProjeto(Projeto projeto) throws SQLException;
+    public void registrarProjeto(Projeto projeto) throws SQLException;
 
     public void excluirProjeto(Projeto projeto) throws SQLException;
 

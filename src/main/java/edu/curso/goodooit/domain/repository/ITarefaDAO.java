@@ -8,9 +8,15 @@ import java.util.List;
 public interface ITarefaDAO {
     public List<Tarefa> buscarTodosTarefa() throws SQLException;
 
-    public Tarefa buscarTarefaId(Long id) throws SQLException;
+    public Tarefa buscarTarefaId(Integer id) throws SQLException;
 
     public Tarefa buscarTarefaNome(String nome) throws SQLException;
+
+    public List<Tarefa> buscarTarefaIdResponsavel(Integer idResponsavel) throws SQLException;
+
+    public List<Tarefa> buscarTarefaIdCriador(Integer idCriador) throws SQLException;
+
+    public List<Tarefa> buscarTarefaIdLista(Integer idLista) throws SQLException;
 
     public List<Tarefa> buscarTarefaPrioridade(int prioridade) throws SQLException;
 
