@@ -23,6 +23,8 @@ public class FXVisualizarMembrosProjeto extends Application {
     private Rectangle fundoEscurecido;
     private VBox menuLateralRef;
 
+    private boolean usuarioEhDono = false; // ← controle de permissão
+
     @Override
     public void start(Stage stage) {
         double larguraTela = Screen.getPrimary().getBounds().getWidth();
@@ -63,7 +65,6 @@ public class FXVisualizarMembrosProjeto extends Application {
         mainContent.setPadding(new Insets(20));
         mainContent.setStyle("-fx-background-color: #b39ddb; -fx-font-family: monospace;");
 
-        // Header
         HBox header = new HBox(10);
         header.setAlignment(Pos.CENTER_LEFT);
 
@@ -82,7 +83,6 @@ public class FXVisualizarMembrosProjeto extends Application {
 
         header.getChildren().addAll(botaoMenu, title, spacer, status);
 
-        // Painel total de membros
         VBox painelMembros = new VBox();
         painelMembros.setAlignment(Pos.CENTER);
         painelMembros.setStyle("-fx-background-color: white; -fx-background-radius: 10;");
@@ -99,7 +99,6 @@ public class FXVisualizarMembrosProjeto extends Application {
 
         painelMembros.getChildren().addAll(titulo, quantidade, rodape);
 
-        // Lista de membros
         VBox blocoMembros = new VBox(10);
         blocoMembros.setStyle("-fx-background-color: white; -fx-background-radius: 10;");
         blocoMembros.setPadding(new Insets(15));
@@ -116,12 +115,26 @@ public class FXVisualizarMembrosProjeto extends Application {
             criarMembro("Nicolas Domingos da Silva", "NicolasDomingos89")
         );
 
-        // Botão voltar
+
+
+        // Botão "Convidar novo membro" (somente para o dono)
+        Button convidar = new Button("Convidar novo membro");
+        convidar.setMaxWidth(Double.MAX_VALUE);
+        convidar.setStyle("-fx-background-color: white; -fx-background-radius: 10; -fx-font-weight: bold;");
+        convidar.setOnAction(e -> System.out.println("Convidar novo membro..."));
+
         Button voltar = new Button("Voltar");
         voltar.setMaxWidth(Double.MAX_VALUE);
         estiloBotaoRoxo(voltar);
 
-        mainContent.getChildren().addAll(header, painelMembros, blocoMembros, voltar);
+        mainContent.getChildren().addAll(header, painelMembros, blocoMembros);
+
+        if (usuarioEhDono) {
+            mainContent.getChildren().add(convidar);
+        }
+
+        mainContent.getChildren().add(voltar);
+
         return mainContent;
     }
 
@@ -143,8 +156,21 @@ public class FXVisualizarMembrosProjeto extends Application {
         userLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: black;");
 
         infos.getChildren().addAll(nomeLabel, userLabel);
-        membroBox.getChildren().addAll(avatar, infos);
 
+        Region espacador = new Region();
+        HBox.setHgrow(espacador, Priority.ALWAYS);
+
+        HBox acoes = new HBox(5);
+        acoes.setAlignment(Pos.CENTER_RIGHT);
+
+        if (usuarioEhDono) {
+            Button remover = new Button("🗑");
+            remover.setStyle("-fx-font-size: 12px;");
+            remover.setOnAction(e -> System.out.println("Remover: " + username));
+            acoes.getChildren().add(remover);
+        }
+
+        membroBox.getChildren().addAll(avatar, infos, espacador, acoes);
         return membroBox;
     }
 
@@ -154,7 +180,7 @@ public class FXVisualizarMembrosProjeto extends Application {
         menu.setStyle("-fx-background-color: white; -fx-border-color: lightgray; -fx-min-width: 250px; -fx-max-width: 250px;");
         menu.setAlignment(Pos.TOP_CENTER);
 
-        ImageView avatar = new ImageView(new Image("/images/Goo.png"));
+        ImageView avatar = new ImageView(new Image("/Goo.png"));
         avatar.setFitHeight(80);
         avatar.setFitWidth(80);
 
