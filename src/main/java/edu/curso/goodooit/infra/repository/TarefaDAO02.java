@@ -8,14 +8,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
-TarefaDAO para primeira versao com menos atributos e funcionalidades
-Relacao de tarefa é direta com projeto, não temos listas e quadros por enquanto
- */
-public class TarefaDAO implements ITarefaDAO {
+public class TarefaDAO02 implements ITarefaDAO {
     private final DataBaseConnection dbConn;
 
-    public TarefaDAO(DataBaseConnection dbConn) {
+    public TarefaDAO02(DataBaseConnection dbConn) {
         this.dbConn = dbConn;
     }
 
@@ -24,14 +20,16 @@ public class TarefaDAO implements ITarefaDAO {
                 rs.getInt("id"),
                 rs.getString("nome"),
                 rs.getString("descricao"),
+                rs.getInt("posicao"),
                 rs.getDate("data_inicio").toLocalDate(),
                 rs.getDate("data_fim").toLocalDate(),
                 rs.getDate("data_criacao").toLocalDate(),
                 rs.getInt("prioridade"),
-                rs.getInt("CriadorID"),
-                rs.getInt("ResponsavelID"),
-                rs.getInt("StatusID"),
-                rs.getInt("ProjetoID")
+                rs.getInt("Status_TarefaID"),
+                rs.getInt("QuadroID"),
+                rs.getInt("listaID"),
+                rs.getInt("criadorID"),
+                rs.getInt("responsavelID")
         );
     }
 
@@ -81,14 +79,7 @@ public class TarefaDAO implements ITarefaDAO {
 
     @Override
     public List<Tarefa> buscarTarefaIdResponsavel(Integer idResponsavel) throws SQLException {
-        String sql = """
-                    SELECT *
-                    FROM Tarefa t
-                    INNER JOIN Projeto p
-                    ON t.ProjetoID = p.id
-                    INNER JOIN Usuario u
-                    ON u.ID = t.ResponsavelID
-                """;
+        String sql = "SELECT * FROM tarefa WHERE ResponsavelID = ?";
         return comporLista(idResponsavel, sql);
     }
 
@@ -130,31 +121,36 @@ public class TarefaDAO implements ITarefaDAO {
     public Integer registrarTarefa(Tarefa tarefa) throws SQLException {
         String sqlInsert = """
                     INSERT INTO tarefa (
-                        nome,
-                        descricao,
-                        data_inicio,
-                        data_fim,
-                        data_criacao,
-                        prioridade,
-                        CriadorID,
-                        Status_TarefaID,
-                        ResponsavelID,
-                        ProjetoID
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                      nome,
+                      descricao,
+                      posicao,
+                      data_inicio,
+                      data_fim,
+                      data_criacao,
+                      prioridade,
+                      Status_TarefaID,
+                      QuadroID,
+                      ListaID,
+                      CriadorID,
+                      ResponsavelID
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """;
+
         try (Connection conn = dbConn.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setString(1, tarefa.getNome());
             stmt.setString(2, tarefa.getDescricao());
-            stmt.setDate(3, Date.valueOf(tarefa.getDataInicio()));
-            stmt.setDate(4, Date.valueOf(tarefa.getDataFim()));
-            stmt.setDate(5, Date.valueOf(tarefa.getDataCriacao()));
-            stmt.setInt(6, tarefa.getPrioridade());
-            stmt.setInt(7, tarefa.getCriadorID());
+            stmt.setInt(3, tarefa.getPosicao());
+            stmt.setDate(4, Date.valueOf(tarefa.getDataInicio()));
+            stmt.setDate(5, Date.valueOf(tarefa.getDataFim()));
+            stmt.setDate(6, Date.valueOf(tarefa.getDataCriacao()));
+            stmt.setInt(7, tarefa.getPrioridade());
             stmt.setInt(8, tarefa.getStatusTarefaID());
-            stmt.setInt(9, tarefa.getResponsavelID());
-            stmt.setInt(10,tarefa.getProjetoID());
+            stmt.setInt(9, tarefa.getQuadroID());
+            stmt.setInt(10, tarefa.getListaID());
+            stmt.setInt(11, tarefa.getCriadorID());
+            stmt.setInt(12, tarefa.getResponsavelID());
 
             int linhas = stmt.executeUpdate();
             System.out.println("Linhas afetadas: " + linhas);
@@ -183,16 +179,18 @@ public class TarefaDAO implements ITarefaDAO {
     public void atualizarTarefa(Tarefa tarefa) throws SQLException {
         String sql = """
                     UPDATE tarefa SET
-                        nome = ?,
-                        descricao = ?,
-                        data_inicio = ?,
-                        data_fim = ?,
-                        data_criacao = ?,
-                        prioridade = ?,
-                        CriadorID = ?,
-                        Status_TarefaID = ?,
-                        ResponsavelID = ?,
-                        ProjetoID = ?
+                      nome               = ?,
+                      descricao          = ?,
+                      posicao            = ?,
+                      data_inicio        = ?,
+                      data_fim           = ?,
+                      data_criacao       = ?,
+                      prioridade         = ?,
+                      Status_TarefaID   = ?,
+                      QuadroID          = ?,
+                      ListaID          = ?,
+                      CriadorID         = ?,
+                      ResponsavelID     = ?
                     WHERE id = ?
                 """;
         try (Connection conn = dbConn.getConnection();
@@ -200,15 +198,17 @@ public class TarefaDAO implements ITarefaDAO {
 
             stmt.setString(1, tarefa.getNome());
             stmt.setString(2, tarefa.getDescricao());
-            stmt.setDate(3, Date.valueOf(tarefa.getDataInicio()));
-            stmt.setDate(4, Date.valueOf(tarefa.getDataFim()));
-            stmt.setDate(5, Date.valueOf(tarefa.getDataCriacao()));
-            stmt.setInt(6, tarefa.getPrioridade());
-            stmt.setInt(7, tarefa.getCriadorID());
+            stmt.setInt(3, tarefa.getPosicao());
+            stmt.setDate(4, Date.valueOf(tarefa.getDataInicio()));
+            stmt.setDate(5, Date.valueOf(tarefa.getDataFim()));
+            stmt.setDate(6, Date.valueOf(tarefa.getDataCriacao()));
+            stmt.setInt(7, tarefa.getPrioridade());
             stmt.setInt(8, tarefa.getStatusTarefaID());
-            stmt.setInt(9, tarefa.getResponsavelID());
-            stmt.setInt(10,tarefa.getProjetoID());
-            stmt.setInt(11,tarefa.getID());
+            stmt.setInt(9, tarefa.getQuadroID());
+            stmt.setInt(10, tarefa.getListaID());
+            stmt.setInt(11, tarefa.getCriadorID());
+            stmt.setInt(12, tarefa.getResponsavelID());
+            stmt.setInt(13, tarefa.getID());
 
             int linhas = stmt.executeUpdate();
             System.out.println("Linhas afetadas: " + linhas);

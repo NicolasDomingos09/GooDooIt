@@ -9,7 +9,7 @@ public interface IUsuarioDAO {
 
     public List<Usuario> buscarTodosUsuarios() throws SQLException;
 
-    public void registrarUsuario(Usuario usuario) throws SQLException;
+    public Integer registrarUsuario(Usuario usuario) throws SQLException;
 
     public void atualizarUsuario(Usuario usuario) throws SQLException;
 

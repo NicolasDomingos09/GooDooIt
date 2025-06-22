@@ -1,7 +1,6 @@
 CREATE DATABASE GooDooIt;
 USE GooDooIt;
 
-USE master;
 DROP DATABASE GooDooIt;
 
 CREATE TABLE Status
@@ -10,7 +9,7 @@ CREATE TABLE Status
     ID        INT          NOT NULL IDENTITY (1,1),
     titulo    VARCHAR(100) NOT NULL,
     descricao VARCHAR(250) NOT NULL
-    PRIMARY KEY (ID)
+        PRIMARY KEY (ID)
 
 );
 
@@ -23,7 +22,7 @@ CREATE TABLE Usuario
     login     VARCHAR(100) NOT NULL UNIQUE,
     senha     VARCHAR(50)  NOT NULL,
     email     VARCHAR(50)  NOT NULL
-    PRIMARY KEY (ID)
+        PRIMARY KEY (ID)
 
 );
 
@@ -38,8 +37,8 @@ CREATE TABLE Projeto
     dataCriacao DATE         NOT NULL,
     LiderID     INT          NOT NULL,
     StatusID    INT          NOT NULL
-    PRIMARY KEY (ID)
-    FOREIGN KEY (StatusID) REFERENCES Status (ID),
+        PRIMARY KEY (ID)
+        FOREIGN KEY (StatusID) REFERENCES Status (ID),
     FOREIGN KEY (LiderID) REFERENCES Usuario (ID),
 
 
@@ -79,7 +78,7 @@ CREATE TABLE Notificacao
     titulo    VARCHAR(100) NOT NULL,
     descricao VARCHAR(200) NOT NULL,
     dataEnvio DATE         NOT NULL DEFAULT (GETDATE())
-    PRIMARY KEY (ID)
+        PRIMARY KEY (ID)
 
 );
 
@@ -89,8 +88,8 @@ CREATE TABLE Usuario_Notificacao
     UsuarioID     INT NOT NULL,
     NotificacaoID INT NOT NULL,
     visualizada   BIT NOT NULL
-    PRIMARY KEY (UsuarioID, NotificacaoID)
-    FOREIGN KEY (UsuarioID) REFERENCES Usuario (ID),
+        PRIMARY KEY (UsuarioID, NotificacaoID)
+        FOREIGN KEY (UsuarioID) REFERENCES Usuario (ID),
     FOREIGN KEY (NotificacaoID) REFERENCES Notificacao (ID)
 
 );
@@ -109,8 +108,8 @@ CREATE TABLE Tarefa
     ResponsavelID INT          NULL,
     StatusID      INT          NOT NULL,
     ProjetoID     INT          NOT NULL
-    PRIMARY KEY (ID)
-    FOREIGN KEY (CriadorID) REFERENCES Usuario (ID),
+        PRIMARY KEY (ID)
+        FOREIGN KEY (CriadorID) REFERENCES Usuario (ID),
     FOREIGN KEY (ResponsavelID) REFERENCES Usuario (ID),
     FOREIGN KEY (ProjetoID) REFERENCES Projeto (ID),
     FOREIGN KEY (StatusID) REFERENCES Status (ID)
@@ -234,5 +233,3 @@ FROM Tarefa
 
 SELECT *
 FROM Convite
-
-

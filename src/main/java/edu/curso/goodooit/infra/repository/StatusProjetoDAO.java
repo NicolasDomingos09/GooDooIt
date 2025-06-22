@@ -28,8 +28,8 @@ public class StatusProjetoDAO implements IStatusProjetoDAO {
         String sql = "SELECT * FROM status_projeto";
         List<StatusProjeto> lista = new ArrayList<>();
         try (Connection conn = dbConn.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 lista.add(construirStatusProjeto(rs));
             }
@@ -41,9 +41,9 @@ public class StatusProjetoDAO implements IStatusProjetoDAO {
     public StatusProjeto buscarStatusProjetoId(Integer id) throws SQLException {
         String sql = "SELECT * FROM status_projeto WHERE id = ?";
         try (Connection conn = dbConn.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            try (ResultSet rs = ps.executeQuery()) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     return construirStatusProjeto(rs);
                 }
@@ -53,31 +53,23 @@ public class StatusProjetoDAO implements IStatusProjetoDAO {
     }
 
     @Override
-    public StatusProjeto registrarStatusProjeto(StatusProjeto statusProjeto) throws SQLException {
+    public Integer registrarStatusProjeto(StatusProjeto statusProjeto) throws SQLException {
         String sqlInsert = "INSERT INTO status_projeto (nome, descricao) VALUES (?, ?)";
         try (Connection conn = dbConn.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement stmt = conn.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS)) {
 
-            ps.setString(1, statusProjeto.getNome());
-            ps.setString(2, statusProjeto.getDescricao());
+            stmt.setString(1, statusProjeto.getNome());
+            stmt.setString(2, statusProjeto.getDescricao());
 
-            int linhas = ps.executeUpdate();
+            int linhas = stmt.executeUpdate();
             System.out.println("Linhas afetadas: " + linhas);
-            try (ResultSet keys = ps.getGeneratedKeys()) {
-                if (keys.next()) {
-                    int novoID = keys.getInt(1);
-                    String sqlSelect = "SELECT * FROM status_projeto WHERE id = ?";
-                    try (PreparedStatement psSelect = conn.prepareStatement(sqlSelect)) {
-                        psSelect.setInt(1, novoID);
-                        try (ResultSet rs = psSelect.executeQuery()) {
-                            if (rs.next()) {
-                                return construirStatusProjeto(rs);
-                            }
-                        }
-                    }
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                } else {
+                    throw new SQLException("Novo ID não encontrado");
                 }
             }
-            throw new SQLException("Falha ao obter ID do status de projeto inserido.");
         }
     }
 
@@ -85,9 +77,9 @@ public class StatusProjetoDAO implements IStatusProjetoDAO {
     public void excluirStatusProjeto(StatusProjeto statusProjeto) throws SQLException {
         String sql = "DELETE FROM status_projeto WHERE id = ?";
         try (Connection conn = dbConn.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, statusProjeto.getID());
-            int linhas = ps.executeUpdate();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, statusProjeto.getID());
+            int linhas = stmt.executeUpdate();
             System.out.println("Linhas afetadas: " + linhas);
         }
     }
@@ -96,11 +88,11 @@ public class StatusProjetoDAO implements IStatusProjetoDAO {
     public void atualizarStatusProjeto(StatusProjeto statusProjeto) throws SQLException {
         String sql = "UPDATE status_projeto SET nome = ?, descricao = ? WHERE id = ?";
         try (Connection conn = dbConn.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, statusProjeto.getNome());
-            ps.setString(2, statusProjeto.getDescricao());
-            ps.setInt(3, statusProjeto.getID());
-            int linhas = ps.executeUpdate();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, statusProjeto.getNome());
+            stmt.setString(2, statusProjeto.getDescricao());
+            stmt.setInt(3, statusProjeto.getID());
+            int linhas = stmt.executeUpdate();
             System.out.println("Linhas afetadas: " + linhas);
         }
     }

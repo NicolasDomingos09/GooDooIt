@@ -10,7 +10,7 @@ public interface IStatusProjetoDAO {
 
     public StatusProjeto buscarStatusProjetoId(Integer id) throws SQLException;
 
-    public StatusProjeto registrarStatusProjeto(StatusProjeto statusProjeto) throws SQLException;
+    public Integer registrarStatusProjeto(StatusProjeto statusProjeto) throws SQLException;
 
     public void excluirStatusProjeto(StatusProjeto statusProjeto) throws SQLException;
 

@@ -1,5 +1,8 @@
 package edu.curso.goodooit.app;
 
+import edu.curso.goodooit.app.usecase.ConviteService;
+import edu.curso.goodooit.app.usecase.EquipeService;
+import edu.curso.goodooit.app.usecase.ProjetoService;
 import edu.curso.goodooit.domain.model.*;
 import edu.curso.goodooit.infra.database.DataBaseConnection;
 import edu.curso.goodooit.infra.repository.*;
@@ -18,29 +21,22 @@ public class Main {
         //Testes
         ComentarioDAO comentarioDAO = new ComentarioDAO(sql); //Preciso testar ainda com o banco novo
         ConviteDAO conviteDAO = new ConviteDAO(sql);
+        ProjetoDAO projetoDAO = new ProjetoDAO(sql);
+        StatusProjetoDAO statusProjetoDAO = new StatusProjetoDAO(sql);
+        EquipeDAO equipeDAO = new EquipeDAO(sql);
+        UsuarioDAO uDAO = new UsuarioDAO(sql);
 
         try {
-            var lista = conviteDAO.buscarTodosConvites();
-            lista.forEach(convite -> System.out.println(convite.toString()));
-            System.out.printf("%n");
+            ProjetoService ps = new ProjetoService(projetoDAO,statusProjetoDAO);
+            EquipeService es = new EquipeService(equipeDAO, projetoDAO);
+            var u = uDAO.buscarUsuarioID(10000);
+            Projeto projeto = ps.buscarProjetoId(2025111);
+            List<Usuario> e = es.listarMembrosProjeto(2025111);
 
-            lista = conviteDAO.buscarConviteIdProjeto(2025100);
-            lista.forEach(convite -> System.out.println(convite.toString()));
-            System.out.printf("%n");
 
-            lista = conviteDAO.buscarConviteIdDestinatario(10008);
-            lista.forEach(convite -> System.out.println(convite.toString()));
-            System.out.printf("%n");
+            ConviteService cs = new ConviteService(conviteDAO, equipeDAO);
 
-            lista = conviteDAO.buscarConviteIdRemetente(10002);
-            lista.forEach(convite -> System.out.println(convite.toString()));
-            System.out.printf("%n");
-
-            var c  = conviteDAO.buscarConvite(2025100, 10002,10001);
-            System.out.println(c.toString());
-
-            conviteDAO.registrarConvite(c);
-
+//            cs.aceitarConvite(projeto.getID(),u.getID(), 10003);
 
         } catch (Exception e) {
             e.printStackTrace();

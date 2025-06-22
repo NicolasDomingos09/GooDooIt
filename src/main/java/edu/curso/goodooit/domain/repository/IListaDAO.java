@@ -12,7 +12,7 @@ public interface IListaDAO {
 
     public Lista buscarListaNome(String nome) throws SQLException;
 
-    public void registrarLista(Lista lista) throws SQLException;
+    public Integer registrarLista(Lista lista) throws SQLException;
 
     public void excluirLista(Lista lista) throws SQLException;
 
