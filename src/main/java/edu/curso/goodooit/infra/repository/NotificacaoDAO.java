@@ -55,7 +55,7 @@ public class NotificacaoDAO implements INotificacaoDAO {
     }
 
     @Override
-    public Notificacao registrarNotificacao(Notificacao notificacao) throws SQLException {
+    public Integer registrarNotificacao(Notificacao notificacao) throws SQLException {
         String sqlInsert = "INSERT INTO notificacao (titulo, descricao, dataEnvio) VALUES (?, ?, ?)";
         try (Connection conn = dbConn.getConnection();
              PreparedStatement psInsert = conn.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS)) {
@@ -65,31 +65,15 @@ public class NotificacaoDAO implements INotificacaoDAO {
             psInsert.setDate(3, Date.valueOf(notificacao.getDataEnvio()));
 
             int linhas = psInsert.executeUpdate();
-            Integer novoId;
-            try (ResultSet keys = psInsert.getGeneratedKeys()) {
-                if (keys.next()) {
-                    novoId = keys.getInt(1);
+            try (ResultSet rs = psInsert.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
                 } else {
-                    throw new SQLException("Falha ao obter ID da notificação inserida.");
-                }
-            }
-            //Cria nova notificacao com o id gerado
-            String sqlSelect = "SELECT * FROM notificacao WHERE ID = ?";
-            try (PreparedStatement psSelect = conn.prepareStatement(sqlSelect)) {
-                psSelect.setInt(1, novoId);
-                try (ResultSet rs = psSelect.executeQuery()) {
-                    if (rs.next()) {
-                        return construirNotificacao(rs);
-                    } else {
-                        throw new SQLException("Notificação inserida mas não encontrada");
-                    }
+                    throw new SQLException("Novo ID não encontrado");
                 }
             }
         }
     }
-
-
-
 
     @Override
     public void excluirNotificacao(Notificacao notificacao) throws SQLException {

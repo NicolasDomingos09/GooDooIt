@@ -9,7 +9,7 @@ import java.util.List;
 public interface IQuadroDAO {
     public List<Quadro> buscarTodosQuadros() throws SQLException;
 
-    public void criarQuadros(String titulo, Integer idProjeto) throws SQLException;
+    public Integer criarQuadros(String titulo, Integer idProjeto) throws SQLException;
 
     public Quadro buscarQuadroID(Integer id) throws SQLException;
 }

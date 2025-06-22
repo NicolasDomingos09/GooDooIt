@@ -43,11 +43,11 @@ public class ConviteDAO implements IConviteDAO {
         return comporLista(idRemetente, sql);
     }
 
-    private List<Convite> comporLista(Integer idRemetente, String sql) throws SQLException {
+    private List<Convite> comporLista(Integer id, String sql) throws SQLException {
         List<Convite> lista = new ArrayList<>();
         try (Connection conn = dbConn.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, idRemetente);
+            ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     lista.add(construirConvite(rs));

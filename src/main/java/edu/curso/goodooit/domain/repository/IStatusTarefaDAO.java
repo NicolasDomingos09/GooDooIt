@@ -10,7 +10,7 @@ public interface IStatusTarefaDAO {
 
     public StatusTarefa buscarStatusTarefaId(Integer id) throws SQLException;
 
-    public StatusTarefa registrarStatusTarefa(StatusTarefa statusTarefa) throws SQLException;
+    public Integer registrarStatusTarefa(StatusTarefa statusTarefa) throws SQLException;
 
     public List<StatusTarefa> buscarStatusTarefaProjetoId(Integer idProjeto) throws SQLException;
 

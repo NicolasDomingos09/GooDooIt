@@ -41,7 +41,7 @@ public class UsuarioDAO implements IUsuarioDAO {
     }
 
     @Override
-    public void registrarUsuario(Usuario usuario) throws SQLException {
+    public Integer registrarUsuario(Usuario usuario) throws SQLException {
         String sql = "INSERT INTO usuario (nome, sobrenome, login, senha, email) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = dbConn.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);) {
@@ -52,6 +52,14 @@ public class UsuarioDAO implements IUsuarioDAO {
             stmt.setString(5, usuario.getEmail());
             int linhas = stmt.executeUpdate();
             System.out.println("Linhas afetadas: " + linhas);
+
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                } else {
+                    throw new SQLException("Novo ID não encontrado");
+                }
+            }
         }
     }
 
