@@ -14,6 +14,8 @@ public interface ITarefaDAO {
 
     public List<Tarefa> buscarTarefaIdResponsavel(Integer idResponsavel) throws SQLException;
 
+    public List<Tarefa> buscarTarefaIdResponsavelProjeto(Integer idResposavel, Integer idProjeto) throws SQLException;
+
     public List<Tarefa> buscarTarefaIdCriador(Integer idCriador) throws SQLException;
 
     public List<Tarefa> buscarTarefaIdLista(Integer idLista) throws SQLException;

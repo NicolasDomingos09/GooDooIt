@@ -82,14 +82,40 @@ public class TarefaDAO implements ITarefaDAO {
     @Override
     public List<Tarefa> buscarTarefaIdResponsavel(Integer idResponsavel) throws SQLException {
         String sql = """
-                    SELECT *
+                    SELECT t.*
                     FROM Tarefa t
                     INNER JOIN Projeto p
                     ON t.ProjetoID = p.id
                     INNER JOIN Usuario u
                     ON u.ID = t.ResponsavelID
+                    WHERE u.ID = ?
                 """;
         return comporLista(idResponsavel, sql);
+    }
+
+    @Override
+    public List<Tarefa> buscarTarefaIdResponsavelProjeto(Integer idResponsavel, Integer idProjeto) throws SQLException {
+        String sql = """
+                    SELECT t.*
+                    FROM Tarefa t
+                    INNER JOIN Projeto p
+                    ON t.ProjetoID = p.id
+                    INNER JOIN Usuario u
+                    ON u.ID = t.ResponsavelID
+                    WHERE u.ID = ? AND p.id = ?
+                """;
+        List<Tarefa> lista = new ArrayList<>();
+        try (Connection conn = dbConn.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idResponsavel);
+            stmt.setInt(2, idProjeto);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    lista.add(construirTarefa(rs));
+                }
+            }
+        }
+        return lista;
     }
 
     @Override

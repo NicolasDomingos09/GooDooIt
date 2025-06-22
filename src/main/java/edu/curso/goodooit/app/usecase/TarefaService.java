@@ -76,7 +76,20 @@ public class TarefaService {
         return tarefaAtualizada;
     }
 
-    public List<Tarefa> listarTarefasResponsavel(Integer idResponsavel, Integer idProjeto) throws Exception {
+    public void excluirTarefa(Integer idTarefa, Integer idUsuario) throws Exception {
+        Tarefa tarefaExcluida = tarefaDAO.buscarTarefaId(idTarefa);
 
+
+        tarefaDAO.excluirTarefa(tarefaExcluida);
     }
+
+    public List<Tarefa> listarTarefasResponsavel(Integer idResponsavel) throws Exception {
+        return tarefaDAO.buscarTarefaIdResponsavel(idResponsavel);
+    }
+
+    public List<Tarefa> listarTarefasResponsavelProjeto(Integer idResponsavel, Integer idProjeto) throws Exception {
+        return tarefaDAO.buscarTarefaIdResponsavelProjeto(idResponsavel, idProjeto);
+    }
+
+
 }
