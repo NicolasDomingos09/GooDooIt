@@ -23,6 +23,8 @@ public class FXVisualizarTarefasProjeto extends Application {
     private Rectangle fundoEscurecido;
     private VBox menuLateralRef;
 
+    private boolean usuarioEhDono = true; // ← controle de permissão
+
     @Override
     public void start(Stage stage) {
         double larguraTela = Screen.getPrimary().getBounds().getWidth();
@@ -63,7 +65,6 @@ public class FXVisualizarTarefasProjeto extends Application {
         mainContent.setPadding(new Insets(20));
         mainContent.setStyle("-fx-background-color: #b39ddb; -fx-font-family: monospace;");
 
-        // Header
         HBox header = new HBox(10);
         header.setAlignment(Pos.CENTER_LEFT);
 
@@ -82,12 +83,10 @@ public class FXVisualizarTarefasProjeto extends Application {
 
         header.getChildren().addAll(botaoMenu, title, spacer, status);
 
-        // Campo de busca
         TextField busca = new TextField();
         busca.setPromptText("Buscar tarefa...");
         busca.setStyle("-fx-background-radius: 10; -fx-background-color: white;");
 
-        // Bloco com total de tarefas
         VBox painelTarefas = new VBox();
         painelTarefas.setAlignment(Pos.CENTER);
         painelTarefas.setStyle("-fx-background-color: white; -fx-background-radius: 10;");
@@ -104,12 +103,10 @@ public class FXVisualizarTarefasProjeto extends Application {
 
         painelTarefas.getChildren().addAll(titulo, quantidade, rodape);
 
-        // Botão Criar nova tarefa
         Button criarTarefa = new Button("Criar nova tarefa");
         criarTarefa.setMaxWidth(Double.MAX_VALUE);
         criarTarefa.setStyle("-fx-background-color: white; -fx-background-radius: 10; -fx-font-weight: bold; -fx-font-size: 13px;");
 
-        // Lista de tarefas
         VBox blocoTarefas = new VBox(10);
         blocoTarefas.setStyle("-fx-background-color: white; -fx-background-radius: 10;");
         blocoTarefas.setPadding(new Insets(15));
@@ -123,11 +120,11 @@ public class FXVisualizarTarefasProjeto extends Application {
                 "Documentar criação de dispositivos",
                 "Alta",
                 "24/06/2025",
-                "Lista de tarefas: Lista de engenharia"
+                "Lista de tarefas: Lista de engenharia",
+                !usuarioEhDono
             ));
         }
 
-        // Botão voltar
         Button voltar = new Button("Voltar");
         voltar.setMaxWidth(Double.MAX_VALUE);
         estiloBotaoRoxo(voltar);
@@ -136,7 +133,7 @@ public class FXVisualizarTarefasProjeto extends Application {
         return mainContent;
     }
 
-    private VBox criarTarefaItem(String nome, String prioridade, String prazo, String origem) {
+    private VBox criarTarefaItem(String nome, String prioridade, String prazo, String origem, boolean ehDono) {
         VBox tarefaBox = new VBox(5);
         tarefaBox.setStyle("-fx-background-color: #e0e0e0; -fx-background-radius: 10;");
         tarefaBox.setPadding(new Insets(10));
@@ -156,13 +153,26 @@ public class FXVisualizarTarefasProjeto extends Application {
         Label origemLbl = new Label(origem);
         origemLbl.setStyle("-fx-font-size: 12px; -fx-text-fill: black;");
 
-        HBox linhaVisualizacao = new HBox();
-        linhaVisualizacao.setAlignment(Pos.CENTER_RIGHT);
-        Label iconeOlho = new Label("👁");
-        iconeOlho.setStyle("-fx-font-size: 14px;");
-        linhaVisualizacao.getChildren().add(iconeOlho);
+        HBox acoes = new HBox(10);
+        acoes.setAlignment(Pos.CENTER_RIGHT);
 
-        tarefaBox.getChildren().addAll(nomeTarefa, status, prioridadeLbl, prazoLbl, origemLbl, linhaVisualizacao);
+        Label visualizar = new Label("👁");
+        visualizar.setStyle("-fx-font-size: 14px;");
+        acoes.getChildren().add(visualizar);
+
+        if (ehDono) {
+            Button editar = new Button("✏");
+            Button excluir = new Button("🗑");
+            editar.setStyle("-fx-font-size: 12px;");
+            excluir.setStyle("-fx-font-size: 12px;");
+
+            editar.setOnAction(e -> System.out.println("Editar: " + nome));
+            excluir.setOnAction(e -> System.out.println("Excluir: " + nome));
+
+            acoes.getChildren().addAll(editar, excluir);
+        }
+
+        tarefaBox.getChildren().addAll(nomeTarefa, status, prioridadeLbl, prazoLbl, origemLbl, acoes);
         return tarefaBox;
     }
 
