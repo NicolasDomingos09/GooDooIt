@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class ProjetoService {
     private final ProjetoDAO projetoDAO;
-    private final StatusProjetoDAO statusProjetoDAO;
+//    private final StatusProjetoDAO statusProjetoDAO;
     private final StatusDAO statusDAO;
     /*
         statusProjetoID = 1 = Em Andamento
@@ -19,9 +19,15 @@ public class ProjetoService {
         mesma coisa para Status
      */
 
-    public ProjetoService(ProjetoDAO projetoDAO, StatusProjetoDAO statusProjetoDAO, StatusDAO statusDAO) {
+//    public ProjetoService(ProjetoDAO projetoDAO, StatusProjetoDAO statusProjetoDAO, StatusDAO statusDAO) {
+//        this.projetoDAO = projetoDAO;
+//        this.statusProjetoDAO = statusProjetoDAO;
+//        this.statusDAO = statusDAO;
+//    }
+
+
+    public ProjetoService(ProjetoDAO projetoDAO, StatusDAO statusDAO) {
         this.projetoDAO = projetoDAO;
-        this.statusProjetoDAO = statusProjetoDAO;
         this.statusDAO = statusDAO;
     }
 

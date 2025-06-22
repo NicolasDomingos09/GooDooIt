@@ -23,11 +23,12 @@ public class Main {
         ConviteDAO conviteDAO = new ConviteDAO(sql);
         ProjetoDAO projetoDAO = new ProjetoDAO(sql);
         StatusProjetoDAO statusProjetoDAO = new StatusProjetoDAO(sql);
+        StatusDAO statusDAO = new StatusDAO(sql);
         EquipeDAO equipeDAO = new EquipeDAO(sql);
         UsuarioDAO uDAO = new UsuarioDAO(sql);
 
         try {
-            ProjetoService ps = new ProjetoService(projetoDAO,statusProjetoDAO);
+            ProjetoService ps = new ProjetoService(projetoDAO, statusDAO);
             EquipeService es = new EquipeService(equipeDAO, projetoDAO);
             var u = uDAO.buscarUsuarioID(10000);
             Projeto projeto = ps.buscarProjetoId(2025111);

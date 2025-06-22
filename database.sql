@@ -1,8 +1,6 @@
 CREATE DATABASE GooDooIt;
 USE GooDooIt;
 
-DROP DATABASE GooDooIt;
-
 CREATE TABLE Status
 (
 
