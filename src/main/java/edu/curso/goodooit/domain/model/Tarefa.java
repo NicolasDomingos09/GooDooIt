@@ -16,9 +16,24 @@ public class Tarefa {
     private Integer ListaID;
     private Integer CriadorID;
     private Integer ResponsavelID;
+    private Integer ProjetoID;
 
 
     public Tarefa() {}
+
+    public Tarefa(Integer ID, String nome, String descricao, LocalDate dataInicio, LocalDate dataFim, LocalDate dataCriacao, int prioridade, Integer statusTarefaID, Integer criadorID, Integer responsavelID, Integer projetoID) {
+        this.ID = ID;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.dataInicio = dataInicio;
+        this.dataFim = dataFim;
+        this.dataCriacao = dataCriacao;
+        this.prioridade = prioridade;
+        CriadorID = criadorID;
+        ResponsavelID = responsavelID;
+        StatusTarefaID = statusTarefaID;
+        ProjetoID = projetoID;
+    }
 
     public Tarefa(Integer ID, String nome, String descricao, int posicao, LocalDate dataInicio, LocalDate dataFim, LocalDate dataCriacao, int prioridade, Integer statusTarefaID, Integer quadroID, Integer listaID, Integer criadorID, Integer responsavelID) {
         this.ID = ID;
@@ -69,6 +84,19 @@ public class Tarefa {
         this.dataCriacao = dataCriacao;
         this.prioridade = 3;
         this.posicao = 1;
+    }
+
+    public Tarefa(String nome, String descricao, LocalDate dataInicio, LocalDate dataFim, LocalDate dataCriacao, int prioridade, Integer statusTarefaID, Integer criadorID, Integer responsavelID, Integer projetoID) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.dataInicio = dataInicio;
+        this.dataFim = dataFim;
+        this.dataCriacao = dataCriacao;
+        this.prioridade = prioridade;
+        CriadorID = criadorID;
+        ResponsavelID = responsavelID;
+        StatusTarefaID = statusTarefaID;
+        ProjetoID = projetoID;
     }
 
     public Integer getID() {
@@ -173,6 +201,14 @@ public class Tarefa {
 
     public void setResponsavelID(Integer responsavelID) {
         ResponsavelID = responsavelID;
+    }
+
+    public Integer getProjetoID() {
+        return ProjetoID;
+    }
+
+    public void setProjetoID(Integer projetoID) {
+        ProjetoID = projetoID;
     }
 
     @Override

@@ -78,7 +78,7 @@ public class ProjetoDAO implements IProjetoDAO {
         String sql = """
                     SELECT p.*
                       FROM Projeto p
-                      JOIN Usuario_Projeto up --former equipe
+                      INNER JOIN Usuario_Projeto up --former equipe
                         ON p.ID = up.projetoID
                      WHERE up.usuarioID = ?
                 """;
@@ -155,8 +155,7 @@ public class ProjetoDAO implements IProjetoDAO {
                            data_inicio        = ?,
                            data_fim           = ?,
                            data_criacao        = ?,
-                           Status_ProjetoID   = ?,
-                           LiderID            = ?
+                           Status_ProjetoID   = ?
                      WHERE ID = ?
                 """;
         try (Connection conn = dbConn.getConnection();
@@ -168,8 +167,7 @@ public class ProjetoDAO implements IProjetoDAO {
             stmt.setDate(4, Date.valueOf(projeto.getDataFim()));
             stmt.setDate(5, Date.valueOf(projeto.getDataCriacao()));
             stmt.setInt(6, projeto.getStatusProjetoID());
-            stmt.setInt(7, projeto.getLiderID());
-            stmt.setInt(8, projeto.getID());
+            stmt.setInt(7, projeto.getID());
 
             int linhas = stmt.executeUpdate();
             System.out.println("Linhas afetadas: " + linhas);

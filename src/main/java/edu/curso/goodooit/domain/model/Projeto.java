@@ -1,6 +1,7 @@
 package edu.curso.goodooit.domain.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Projeto {
     Integer ID;
@@ -11,6 +12,9 @@ public class Projeto {
     LocalDate dataCriacao;
     Integer StatusProjetoID;
     Integer LiderID;
+
+    List<Usuario> usuarios;
+    List<Tarefa> tarefas;
 
     public Projeto() {}
 
@@ -105,6 +109,22 @@ public class Projeto {
 
     public void setLiderID(Integer liderID) {
         LiderID = liderID;
+    }
+
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
+
+    public List<Tarefa> getTarefas() {
+        return tarefas;
+    }
+
+    public void setTarefas(List<Tarefa> tarefas) {
+        this.tarefas = tarefas;
     }
 
     @Override

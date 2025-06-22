@@ -1,5 +1,7 @@
 package edu.curso.goodooit.app;
 
+import edu.curso.goodooit.app.usecase.ConviteService;
+import edu.curso.goodooit.app.usecase.EquipeService;
 import edu.curso.goodooit.app.usecase.ProjetoService;
 import edu.curso.goodooit.domain.model.*;
 import edu.curso.goodooit.infra.database.DataBaseConnection;
@@ -20,12 +22,22 @@ public class Main {
         ComentarioDAO comentarioDAO = new ComentarioDAO(sql); //Preciso testar ainda com o banco novo
         ConviteDAO conviteDAO = new ConviteDAO(sql);
         ProjetoDAO projetoDAO = new ProjetoDAO(sql);
+        StatusProjetoDAO statusProjetoDAO = new StatusProjetoDAO(sql);
+        EquipeDAO equipeDAO = new EquipeDAO(sql);
         UsuarioDAO uDAO = new UsuarioDAO(sql);
+
         try {
-            ProjetoService ps = new ProjetoService(projetoDAO,conviteDAO);
-            var u = uDAO.buscarUsuarioLogin("ana");
-            Projeto projeto = ps.criarProjeto("teste1", "testando service", LocalDate.now(), LocalDate.now(), u.getID());
-            System.out.println(projeto.toString());
+            ProjetoService ps = new ProjetoService(projetoDAO,statusProjetoDAO);
+            EquipeService es = new EquipeService(equipeDAO, projetoDAO);
+            var u = uDAO.buscarUsuarioID(10000);
+            Projeto projeto = ps.buscarProjetoId(2025111);
+            List<Usuario> e = es.listarMembrosProjeto(2025111);
+
+
+            ConviteService cs = new ConviteService(conviteDAO, equipeDAO);
+
+//            cs.aceitarConvite(projeto.getID(),u.getID(), 10003);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

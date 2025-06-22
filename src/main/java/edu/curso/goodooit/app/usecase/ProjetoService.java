@@ -1,8 +1,7 @@
 package edu.curso.goodooit.app.usecase;
 
-import edu.curso.goodooit.domain.model.Projeto;
-import edu.curso.goodooit.infra.repository.ConviteDAO;
-import edu.curso.goodooit.infra.repository.ProjetoDAO;
+import edu.curso.goodooit.domain.model.*;
+import edu.curso.goodooit.infra.repository.*;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -11,11 +10,19 @@ import java.util.Objects;
 
 public class ProjetoService {
     private final ProjetoDAO projetoDAO;
-    private final ConviteDAO conviteDAO;
+    private final StatusProjetoDAO statusProjetoDAO;
+    private final StatusDAO statusDAO;
+    /*
+        statusProjetoID = 1 = Em Andamento
+        statusProjetoID = 2 = Concluído
+        statusProjetoID = 3 = Cancelado
+        mesma coisa para Status
+     */
 
-    public ProjetoService(ProjetoDAO projetoDAO, ConviteDAO conviteDAO) {
+    public ProjetoService(ProjetoDAO projetoDAO, StatusProjetoDAO statusProjetoDAO, StatusDAO statusDAO) {
         this.projetoDAO = projetoDAO;
-        this.conviteDAO = conviteDAO;
+        this.statusProjetoDAO = statusProjetoDAO;
+        this.statusDAO = statusDAO;
     }
 
     private boolean existeNull(String nome, String descricao, LocalDate dataInicio, LocalDate dataFinal) {
@@ -58,8 +65,38 @@ public class ProjetoService {
     }
 
     public List<Projeto> listarProjetosLider(Integer idLider) throws SQLException {
-        List<Projeto> listaLider = projetoDAO.buscarProjetoUsuarioLider(idLider);
-
-        return listaLider;
+        return projetoDAO.buscarProjetoUsuarioLider(idLider);
     }
+
+    public List<Projeto> listarProjetosColaborador(Integer idUsuario) throws SQLException {
+        return projetoDAO.buscarProjetoUsuarioColaborador(idUsuario);
+    }
+
+    public void excluirProjeto(Integer idProjeto, Integer idUsuario) throws Exception {
+        Projeto projetoExcluido = projetoDAO.buscarProjetoId(idProjeto);
+
+        if (!Objects.equals(idUsuario, projetoExcluido.getLiderID()))
+            throw new Exception("Somente o lider do projeto pode excluir o projeto");
+
+        projetoDAO.excluirProjeto(projetoExcluido);
+    }
+
+    public Projeto buscarProjetoId(Integer idProjeto) throws SQLException {
+        return projetoDAO.buscarProjetoId(idProjeto);
+    }
+
+    public Projeto buscarProjetoNome(String nomeProjeto) throws SQLException {
+        return projetoDAO.buscarProjetoNome(nomeProjeto);
+    }
+
+    public Projeto definirStatus(Integer idStatus, Integer idProjeto) throws SQLException {
+        Status st = statusDAO.buscarStatusId(idStatus);
+        Projeto p = projetoDAO.buscarProjetoId(idProjeto);
+
+        p.setStatusProjetoID(idStatus);
+        projetoDAO.atualizarProjeto(p);  //status atualizado no banco
+
+        return p;
+    }
+
 }
