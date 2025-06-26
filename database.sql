@@ -210,6 +210,14 @@ VALUES (10002, 2025100, 10001),
        (10000, 2025108, 10009),
        (10006, 2025109, 10000);
 
+SELECT t.*
+                    FROM Tarefa t
+                    INNER JOIN Projeto p
+                    ON t.ProjetoID = p.id
+                    INNER JOIN Usuario u
+                    ON u.ID = t.ResponsavelID
+                    WHERE u.ID = 10000 AND p.id = 2025101
+
 
 SELECT *
 FROM Status
